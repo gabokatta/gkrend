@@ -2,7 +2,7 @@ import { mat4, vec3 } from "gl-matrix";
 
 const vertexShaderPath = 'src/engine/shaders/vertex.glsl';
 const fragmentShaderPath = 'src/engine/shaders/fragment.glsl';
-const uvTexturePath = 'dist/assets/uv.jpg';
+const uvTexturePath = 'src/engine/textures/uv.jpg';
 
 export class WebGL {
 
