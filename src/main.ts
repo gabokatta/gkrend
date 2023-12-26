@@ -1,6 +1,3 @@
-import { Sphere } from "./engine/shapes/sphere";
-import { WebGL } from "./engine/webgl";
-
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <html lang="en">
 <head>
@@ -19,13 +16,3 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 </body>
 </html>
 `
-
-const draw = async () => {
-  var canvas = <HTMLCanvasElement> document.getElementById("my-canvas")!;
-  var gl =  await new WebGL(canvas).init();
-  var sphere = new Sphere(3)
-
-  gl.draw(sphere)
-}
-
-draw();
