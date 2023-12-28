@@ -38,10 +38,13 @@ header nav ul {
     margin: 0;
 }
 
-
 main {
     display: grid;
     min-height: calc(100vh - 330px);
+}
+
+.gui {
+    display: none;
 }
 
 main nav {
@@ -85,4 +88,23 @@ footer nav ul {
     gap: calc(100vw / 10) ;
 }
 
+@media only screen and (min-width: 1000px) {
+
+    canvas {
+
+    }
+
+    .gui {
+
+    }
+
+    main nav {
+
+    }
+
+    main nav ul {
+
+    }
+
+}
 
