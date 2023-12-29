@@ -13,6 +13,8 @@
     --footer-ul-gap: calc(100vw / 5) ;
     --header-w: 100%;
     --header-h: 100px;
+    --header-logo-margin: 0 0 0 50px;
+    --header-ul-padding: 0 30px 0 0;
     --header-ul-gap: calc(100vw / 20);
     --canvas-w: 80%;
     --canvas-h: 50vh;
@@ -33,11 +35,11 @@ header {
 
 header .logo {
     color: black;
-    margin: 0 0 0 50px;
+    margin: var(--header-logo-margin);
 }
 
 header nav ul {
-    padding: 0 30px 0 0;
+    padding: var(--header-ul-padding);
     list-style: none;
     display: flex;
     gap:  var(--header-ul-gap);
@@ -98,12 +100,22 @@ footer nav ul {
         --main-ul-gap: calc(100vw / 25);
         --canvas-w: 50%;
         --canvas-h: 60vh;
+        --header-logo-margin: 0 0 0 150px;
+        --header-ul-padding: 0 100px 0 0;
     }
 
 
     canvas {
         width: var(--canvas-w);
         height: var(--canvas-h);
+    }
+
+    header nav ul {  
+        padding: var(--header-ul-padding);
+    }
+
+    header .logo {
+        margin: var(--header-logo-margin);
     }
 
     .gui-container {
