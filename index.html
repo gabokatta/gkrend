@@ -6,6 +6,9 @@
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <link rel="icon" type="image/icon" href="/gba.ico" />
     <link rel="stylesheet" href="src/rendering/style.css">
+    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/rendering/gui.ts"></script>
+    <script src="src/rendering/gui.ts"></script>
     <title>gkrend</title>
   </head>
   <body>
@@ -29,7 +32,7 @@
         </ul>
       </nav>
       <canvas></canvas>
-      <div class="gui">
+      <div class="gui-container">
 
       </div>
     </main>
@@ -43,6 +46,4 @@
       </ul>
     </nav>
   </footer>
-  <script type="module" src="/src/main.ts"></script>
-  <script src="src/rendering/theme.ts"></script>
 </html>
