@@ -16,7 +16,7 @@
     --header-logo-margin: 0 0 0 50px;
     --header-ul-padding: 0 30px 0 0;
     --header-ul-gap: calc(100vw / 20);
-    --canvas-w: 80%;
+    --canvas-w: 95%;
     --canvas-h: 50vh;
 }
 
@@ -66,7 +66,7 @@ main nav ul {
     gap: var(--main-ul-gap) ;
 }
 
-canvas {
+#canvas {
     justify-self: center;
     width: var(--canvas-w);
     height: var(--canvas-h);
@@ -105,7 +105,7 @@ footer nav ul {
     }
 
 
-    canvas {
+    #canvas {
         width: var(--canvas-w);
         height: var(--canvas-h);
     }
@@ -128,10 +128,6 @@ footer nav ul {
         align-items: center;
         justify-content: space-evenly;
     }
-
-    main nav {
-    }
-
 
     main nav ul {
         flex-direction: column;

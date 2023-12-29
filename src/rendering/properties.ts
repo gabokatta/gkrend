@@ -1,3 +1,3 @@
-export const values = {
+export var sceneProperties = {
     
 }

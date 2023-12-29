@@ -85,10 +85,8 @@ export class WebGL {
 
     setUpMatrices() {
         mat4.perspective(this.projMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 500.0);
-        
         mat4.identity(this.viewMatrix);
         mat4.translate(this.viewMatrix, this.viewMatrix, [0.0, 0.0, -10.0]);
-
         this.setMatrixUniforms();
     };
 
@@ -120,7 +118,7 @@ export class WebGL {
     }
 
     draw(geometry: any, method: DrawMethod =  this.method) {
-        this.setMatrixUniforms();
+        this.setUpMatrices();
         const vertexBuffer = this.createBuffer(geometry.position);
         const normalBuffer = this.createBuffer(geometry.normal);
         const binormalBuffer = this.createBuffer(geometry.binormal);
