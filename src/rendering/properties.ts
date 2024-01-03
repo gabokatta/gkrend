@@ -2,28 +2,6 @@ import { DrawMethod } from "../engine/webgl";
 import { Animation } from "./animation";
 
 
-export class SceneProperties {
-
-    public shape: Shapes = Shapes.SPHERE;
-    public texture: Textures = Textures.NONE;
-    public camera: Cameras = Cameras.ORBITAL;
-    public render: DrawMethod = DrawMethod.Smooth;
-
-    public animations: ApplicableAnimation[] = []
-    public velocity: number = 2;
-    
-    public sphereRadius: number = 3;
-    public coneRadius: number = 2;
-    public coneHeight: number = 4;
-    public cubeWidth: number = 2;
-    public cubeHeight: number = 2;
-    public cubeDepth: number = 2;
-    public cylinderHeight: number = 4;
-    public cylinderRadius: number = 2;
-
-
-}
-
 export class ApplicableAnimation {
     public animation: Animation;
     public enabled: boolean = false;
@@ -47,8 +25,33 @@ export enum Textures {
 }
 
 export enum Shapes {
-    CONE,
-    CYLINDER,
-    SPHERE,
-    CUBE
+    CONE = "cone",
+    CYLINDER = "cylinder",
+    SPHERE = "sphere",
+    CUBE = "cube"
 }
+
+
+export var props = {
+    shape: Shapes.SPHERE,
+    texture: Textures.NONE,
+    camera: Cameras.ORBITAL,
+    render: DrawMethod.Smooth,
+
+    shapeColor: [255, 0, 255],
+
+    animations: [],
+    rotate: false,
+    rotspeed: 2,
+    scale: false,
+    scalespeed: 2,
+    
+    sphereRadius: 3,
+    coneRadius: 2,
+    coneHeight: 4,
+    cubeWidth: 2,
+    cubeHeight: 2,
+    cubeDepth: 2,
+    cylinderHeight: 4,
+    cylinderRadius: 2
+};

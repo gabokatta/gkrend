@@ -98,7 +98,7 @@ footer nav ul {
     :root {
         --footer-h: 20px;
         --main-ul-gap: calc(100vw / 25);
-        --canvas-w: 50%;
+        --canvas-w: 65%;
         --canvas-h: 60vh;
         --header-logo-margin: 0 0 0 150px;
         --header-ul-padding: 0 100px 0 0;
@@ -126,11 +126,12 @@ footer nav ul {
         min-height: var(--main-h);
         display: flex;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: space-between;
     }
 
     main nav ul {
         flex-direction: column;
+        padding-left: 50px;
         gap: var(--main-ul-gap);
     }
 
