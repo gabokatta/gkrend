@@ -1,13 +1,5 @@
-
-
 var activeAnimations = [];
 
-function initScene() {
+function initScene() {}
 
-}
-
-
-function tick() {
-
-}
-
+function tick() {}

@@ -4,143 +4,159 @@ import type { WebGL } from "../webgl";
 import { DroneState } from "./state";
 
 export class Drone implements Camera {
-    initialPosition: vec3;
-    initialDirection: vec3;
+  initialPosition: vec3;
+  initialDirection: vec3;
 
-    position: vec3;
-    direction: vec3;
+  position: vec3;
+  direction: vec3;
 
-    state: DroneState = new DroneState();
+  state: DroneState = new DroneState();
 
-    up: vec3 = vec3.fromValues(0,1,0);
-    side: vec3 = vec3.fromValues(1,0,0);
+  up: vec3 = vec3.fromValues(0, 1, 0);
+  side: vec3 = vec3.fromValues(1, 0, 0);
 
-    keyUpListener: any;
-    keyDownListener: any;
-    mouseListener: any;
+  keyUpListener: any;
+  keyDownListener: any;
+  mouseListener: any;
 
-    constructor(gl: WebGL, position: vec3 = [0,0,0], direction: vec3 = [0,0,-1]) {
-        this.initialPosition = position;
-        this.initialDirection = direction;
+  constructor(
+    gl: WebGL,
+    position: vec3 = [0, 0, 0],
+    direction: vec3 = [0, 0, -1]
+  ) {
+    this.initialPosition = position;
+    this.initialDirection = direction;
 
-        this.position = position;
-        this.direction = direction;
-        this.keyDownListener = document.addEventListener("keydown", (e: KeyboardEvent) => {
-            const velocity = 1;
-            switch (e.key) {
-                case "ArrowUp":
-                case "w":
-                    this.state.fwd = velocity;
-                    break;
-                case "ArrowDown":
-                case "s":
-                    this.state.fwd = -velocity;
-                    break;
-                case "ArrowLeft":
-                case "a":
-                    this.state.right = -velocity;
-                    break;
-                case "ArrowRight":
-                case "d":
-                    this.state.right = velocity;
+    this.position = position;
+    this.direction = direction;
+    this.keyDownListener = document.addEventListener(
+      "keydown",
+      (e: KeyboardEvent) => {
+        const velocity = 1;
+        switch (e.key) {
+          case "ArrowUp":
+          case "w":
+            this.state.fwd = velocity;
+            break;
+          case "ArrowDown":
+          case "s":
+            this.state.fwd = -velocity;
+            break;
+          case "ArrowLeft":
+          case "a":
+            this.state.right = -velocity;
+            break;
+          case "ArrowRight":
+          case "d":
+            this.state.right = velocity;
         }
-        });
-        this.keyUpListener = document.addEventListener("keyup", (e: KeyboardEvent) => {
-            switch (e.key) {
-                case "ArrowUp":
-                case "w":
-                case "ArrowDown":
-                case "s":
-                  this.state.fwd = 0;
-                  break;
-                case "ArrowLeft":
-                case "a":
-                case "ArrowRight":
-                case "d":
-                  this.state.right = 0;
-            }
-        });
-
-        gl.canvas.onclick = function () {
-            gl.canvas.requestPointerLock();
+      }
+    );
+    this.keyUpListener = document.addEventListener(
+      "keyup",
+      (e: KeyboardEvent) => {
+        switch (e.key) {
+          case "ArrowUp":
+          case "w":
+          case "ArrowDown":
+          case "s":
+            this.state.fwd = 0;
+            break;
+          case "ArrowLeft":
+          case "a":
+          case "ArrowRight":
+          case "d":
+            this.state.right = 0;
         }
+      }
+    );
 
-        this.mouseListener = gl.canvas.addEventListener("mousemove", (e) => {
-            const { movementX, movementY } = e;
-            const amount = 0.1;
-            this.state.du = linearInterpolation(this.state.du, movementX, amount);
-            this.state.dv = linearInterpolation(this.state.dv, movementY, amount);
-        });
-    }
-    
-    lookAt(_position: vec3) {
-        throw new Error("Method not implemented.");
-    }
+    gl.canvas.onclick = function () {
+      gl.canvas.requestPointerLock();
+    };
 
-    updateDirection() {
-        const velocityFactor = 0.01;
-        const { du, dv } = this.state;
-        this.state.u += du * velocityFactor;
-        this.state.v += dv * velocityFactor;
+    this.mouseListener = gl.canvas.addEventListener("mousemove", (e) => {
+      const { movementX, movementY } = e;
+      const amount = 0.1;
+      this.state.du = linearInterpolation(this.state.du, movementX, amount);
+      this.state.dv = linearInterpolation(this.state.dv, movementY, amount);
+    });
+  }
 
-        if (this.state.v > 1) this.state.v = 1;
-        if (this.state.v < -0.5) this.state.v = -0.5;
+  lookAt(_position: vec3) {
+    throw new Error("Method not implemented.");
+  }
 
-        let transform = mat4.create();
-        rotateMat(transform, -this.state.v, this.side);
-        rotateMat(transform, -this.state.u, this.up);
+  updateDirection() {
+    const velocityFactor = 0.01;
+    const { du, dv } = this.state;
+    this.state.u += du * velocityFactor;
+    this.state.v += dv * velocityFactor;
 
+    if (this.state.v > 1) this.state.v = 1;
+    if (this.state.v < -0.5) this.state.v = -0.5;
 
-        const dir = vec3.fromValues(this.initialDirection[0], this.initialDirection[1], this.initialDirection[2]);
-        vec3.transformMat4(dir, dir, transform);
+    let transform = mat4.create();
+    rotateMat(transform, -this.state.v, this.side);
+    rotateMat(transform, -this.state.u, this.up);
 
-        const frictionFactor = 0.5;
-        this.state.du *= frictionFactor;
-        this.state.dv *= frictionFactor;
+    const dir = vec3.fromValues(
+      this.initialDirection[0],
+      this.initialDirection[1],
+      this.initialDirection[2]
+    );
+    vec3.transformMat4(dir, dir, transform);
 
-        this.direction = dir;
-    }
+    const frictionFactor = 0.5;
+    this.state.du *= frictionFactor;
+    this.state.dv *= frictionFactor;
 
-    updatePostion() {
-        const { fwd, right } = this.state;
-        const velocityFactor = 0.3;
+    this.direction = dir;
+  }
 
-        let forwardVec = vec3.normalize(vec3.create(), this.direction);
-        let rightVec = vec3.cross(vec3.create(), this.direction, this.up);
-        vec3.normalize(rightVec, rightVec);
+  updatePostion() {
+    const { fwd, right } = this.state;
+    const velocityFactor = 0.3;
 
-        vec3.scale(forwardVec, forwardVec, fwd *velocityFactor)
-        vec3.scale(rightVec, rightVec, right * velocityFactor);
+    let forwardVec = vec3.normalize(vec3.create(), this.direction);
+    let rightVec = vec3.cross(vec3.create(), this.direction, this.up);
+    vec3.normalize(rightVec, rightVec);
 
-        vec3.add(this.position, this.position, forwardVec);
-        vec3.add(this.position, this.position, rightVec);
-    }
+    vec3.scale(forwardVec, forwardVec, fwd * velocityFactor);
+    vec3.scale(rightVec, rightVec, right * velocityFactor);
 
-    update(gl: WebGL): void {
-        this.updateDirection();
-        this.updatePostion();
-        gl.setView(this.getViewMatrix());
-    }
+    vec3.add(this.position, this.position, forwardVec);
+    vec3.add(this.position, this.position, rightVec);
+  }
 
-    getViewMatrix(): mat4 {
-        const target = vec3.add(vec3.create(), this.position, this.direction);
-        return mat4.lookAt(mat4.create(), this.position, target, this.up);
-    }
+  update(gl: WebGL): void {
+    this.updateDirection();
+    this.updatePostion();
+    gl.setView(this.getViewMatrix());
+  }
 
-    clean(): void {
-        document.removeEventListener("keyup", this.keyUpListener);
-        document.removeEventListener("keydown", this.keyDownListener);
-        document.removeEventListener("mousemove", this.mouseListener);
-        document.exitPointerLock();
-    }
+  getViewMatrix(): mat4 {
+    const target = vec3.add(vec3.create(), this.position, this.direction);
+    return mat4.lookAt(mat4.create(), this.position, target, this.up);
+  }
 
+  clean(): void {
+    document.removeEventListener("keyup", this.keyUpListener);
+    document.removeEventListener("keydown", this.keyDownListener);
+    document.removeEventListener("mousemove", this.mouseListener);
+    document.exitPointerLock();
+  }
 }
 
 function rotateMat(mat: mat4, angle: number, axis: vec3) {
-    let newMat = mat4.fromRotation(mat4.create(), angle, axis);
-    return mat4.multiply(mat, newMat, mat);
+  let newMat = mat4.fromRotation(mat4.create(), angle, axis);
+  return mat4.multiply(mat, newMat, mat);
 }
 
-function linearInterpolation(start: number, end: number, amount: number): number {
-    return   (1 - amount) * start + amount * end;
+function linearInterpolation(
+  start: number,
+  end: number,
+  amount: number
+): number {
+  return (1 - amount) * start + amount * end;
 }
