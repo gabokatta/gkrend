@@ -1,16 +1,5 @@
 import { DrawMethod } from "../engine/webgl";
-import { Animation } from "./animation";
-
-
-export class ApplicableAnimation {
-    public animation: Animation;
-    public enabled: boolean = false;
-
-    constructor(animation: Animation, enabled: boolean) {
-        this.animation = animation;
-        this.enabled = enabled;
-    }
-}
+import { ANIMATIONS } from "./animation";
 
 export enum Cameras {
     DRONE,
@@ -40,7 +29,7 @@ export var props = {
 
     shapeColor: [255, 0, 255],
 
-    animations: [],
+    animations: ANIMATIONS,
     rotate: false,
     rotspeed: 2,
     scale: false,

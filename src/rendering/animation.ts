@@ -1,6 +1,15 @@
 import { Object3D, Transformation } from "../engine/object";
-import { ApplicableAnimation } from "./properties";
 
+
+export class ApplicableAnimation {
+    public animation: Animation;
+    public enabled: boolean = false;
+
+    constructor(animation: Animation, enabled: boolean) {
+        this.animation = animation;
+        this.enabled = enabled;
+    }
+}
 
 export interface Animation {
 
@@ -43,12 +52,27 @@ export class Resize implements Animation {
     
 }
 
-export const RESIZE: Animation = new Resize();
-export const ROTATE: Animation = new Rotate();
-export function applyAnimations(animations: ApplicableAnimation[], object: Object3D, tick: number) {
-    animations.forEach( (applicable) => {
+export enum ANIMATION {
+    ROTATE, 
+    RESIZE
+}
+
+export var ANIMATIONS: Map<ANIMATION, ApplicableAnimation> = new Map<ANIMATION, ApplicableAnimation>([
+    [ANIMATION.RESIZE, new ApplicableAnimation(new Resize(), false)],
+    [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), false)]
+])
+
+
+export function applyAnimations(animations: Map<ANIMATION, ApplicableAnimation>, object: Object3D, tick: number) {
+    animations.forEach((applicable , _type) => {
         if (applicable.enabled) {
             applicable.animation.applyFrame(object, tick);
         } 
     })
+}
+
+export function changeAnimationStatus(animations: Map<ANIMATION,ApplicableAnimation>, type: ANIMATION, status:boolean) {
+    if (animations.has(type)) {
+        animations.get(type)!.enabled = status;
+    }
 }

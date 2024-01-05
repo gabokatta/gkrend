@@ -1,5 +1,6 @@
 import { GUI } from "dat.gui";
 import { Shapes, props } from "./properties";
+import { ANIMATION, changeAnimationStatus } from "./animation";
 
 
 var gui = new GUI({ autoPlace:false, width:225 });
@@ -18,8 +19,14 @@ var sizeChildren = [coneMenu, cubeMenu, sphereMenu, cylinderMenu]
 var animationFolder: GUI = gui.addFolder("Animation")
 animationFolder.add(props, 'rotspeed', 1, 10, 1).step(1)
 animationFolder.add(props, 'scalespeed', 1, 10).step(1)
-animationFolder.add(props, 'rotate').onChange((value) => { props.rotate = value;})
-animationFolder.add(props, 'scale').onChange((value) => { props.scale = value;})
+animationFolder.add(props, 'rotate').onChange((value) => { 
+    props.rotate = value;
+    changeAnimationStatus(props.animations, ANIMATION.ROTATE, value);
+})
+animationFolder.add(props, 'scale').onChange((value) => { 
+    props.scale = value;
+    changeAnimationStatus(props.animations, ANIMATION.RESIZE, value);
+})
 animationFolder.open()
 
 hideFolders(sizeChildren)
