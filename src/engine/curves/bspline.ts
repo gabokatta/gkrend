@@ -50,11 +50,7 @@ export class BSpline extends Curve {
 }
 
 function cuadraticBases(): Function[] {
-  return [
-    (u: number) => 0.5 * (1 - u) * (1 - u),
-    (u: number) => 0.5 + u * (1 - u),
-    (u: number) => 0.5 * u * u,
-  ];
+  return [(u: number) => 0.5 * (1 - u) * (1 - u), (u: number) => 0.5 + u * (1 - u), (u: number) => 0.5 * u * u];
 }
 
 function cubicBases(): Function[] {

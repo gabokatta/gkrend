@@ -20,11 +20,7 @@ export class Segment {
     delta: number = DEFAULT_DELTA,
     width: number = 2
   ): void {
-    let p = [
-      this.controlPoints[0],
-      this.controlPoints[1],
-      this.controlPoints[2],
-    ];
+    let p = [this.controlPoints[0], this.controlPoints[1], this.controlPoints[2]];
     if (this.curve.level == CurveLevel.CUBIC) {
       p.push(this.controlPoints[3]);
     }
@@ -60,10 +56,7 @@ export class Segment {
   }
 
   getNormal(tangent: vec3) {
-    return vec3.normalize(
-      vec3.create(),
-      vec3.cross(vec3.create(), this.binormal, tangent)
-    );
+    return vec3.normalize(vec3.create(), vec3.cross(vec3.create(), this.binormal, tangent));
   }
 
   getPoint(u: number) {
@@ -71,10 +64,7 @@ export class Segment {
   }
 
   getTangent(u: number) {
-    return vec3.normalize(
-      vec3.create(),
-      this.applyBases(u, this.curve.dB, this.curve.level)
-    );
+    return vec3.normalize(vec3.create(), this.applyBases(u, this.curve.dB, this.curve.level));
   }
 
   getLength(delta: number): number {
@@ -98,21 +88,9 @@ export class Segment {
       z = bases[0](u) * p0[2] + bases[1](u) * p1[2] + bases[2](u) * p2[2];
     } else {
       let p3 = this.controlPoints[3];
-      x =
-        bases[0](u) * p0[0] +
-        bases[1](u) * p1[0] +
-        bases[2](u) * p2[0] +
-        bases[3](u) * p3[0];
-      y =
-        bases[0](u) * p0[1] +
-        bases[1](u) * p1[1] +
-        bases[2](u) * p2[1] +
-        bases[3](u) * p3[1];
-      z =
-        bases[0](u) * p0[2] +
-        bases[1](u) * p1[2] +
-        bases[2](u) * p2[2] +
-        bases[3](u) * p3[2];
+      x = bases[0](u) * p0[0] + bases[1](u) * p1[0] + bases[2](u) * p2[0] + bases[3](u) * p3[0];
+      y = bases[0](u) * p0[1] + bases[1](u) * p1[1] + bases[2](u) * p2[1] + bases[3](u) * p3[1];
+      z = bases[0](u) * p0[2] + bases[1](u) * p1[2] + bases[2](u) * p2[2] + bases[3](u) * p3[2];
     }
     return vec3.fromValues(x, y, z);
   }

@@ -45,11 +45,7 @@ export class Object3D {
   applyTransformation(transformation: Transformation): void {
     switch (transformation.type) {
       case TransformationType.Translation:
-        mat4.translate(
-          this.transform,
-          this.transform,
-          transformation.getData()
-        );
+        mat4.translate(this.transform, this.transform, transformation.getData());
         break;
       case TransformationType.Scaling:
         mat4.scale(this.transform, this.transform, transformation.getData());
@@ -92,12 +88,7 @@ export class Transformation {
   data: number[];
 
   static rotation(angle: number, axis: number[]): Transformation {
-    return new Transformation(TransformationType.Rotation, [
-      angle,
-      axis[0],
-      axis[1],
-      axis[2],
-    ]);
+    return new Transformation(TransformationType.Rotation, [angle, axis[0], axis[1], axis[2]]);
   }
 
   static scale(factors: number[]): Transformation {

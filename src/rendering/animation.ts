@@ -38,9 +38,7 @@ export class Resize implements Animation {
 
     scaleFactor = this.flip ? mod(t) : modFactor - mod(t);
 
-    object.updateTransform([
-      Transformation.scale([scaleFactor, scaleFactor, scaleFactor]),
-    ]);
+    object.updateTransform([Transformation.scale([scaleFactor, scaleFactor, scaleFactor])]);
   }
 }
 
@@ -49,19 +47,12 @@ export enum ANIMATION {
   RESIZE,
 }
 
-export var ANIMATIONS: Map<ANIMATION, ApplicableAnimation> = new Map<
-  ANIMATION,
-  ApplicableAnimation
->([
+export var ANIMATIONS: Map<ANIMATION, ApplicableAnimation> = new Map<ANIMATION, ApplicableAnimation>([
   [ANIMATION.RESIZE, new ApplicableAnimation(new Resize(), false)],
   [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), false)],
 ]);
 
-export function applyAnimations(
-  animations: Map<ANIMATION, ApplicableAnimation>,
-  object: Object3D,
-  tick: number
-) {
+export function applyAnimations(animations: Map<ANIMATION, ApplicableAnimation>, object: Object3D, tick: number) {
   animations.forEach((applicable, _type) => {
     if (applicable.enabled) {
       applicable.animation.applyFrame(object, tick);

@@ -35,11 +35,7 @@ export class Bezier extends Curve {
 }
 
 function cuadraticBases(): Function[] {
-  return [
-    (u: number) => (1 - u) * (1 - u),
-    (u: number) => 2 * u * (1 - u),
-    (u: number) => u * u,
-  ];
+  return [(u: number) => (1 - u) * (1 - u), (u: number) => 2 * u * (1 - u), (u: number) => u * u];
 }
 
 function cubicBases(): Function[] {
@@ -52,11 +48,7 @@ function cubicBases(): Function[] {
 }
 
 function cuadraticDer(): Function[] {
-  return [
-    (u: number) => -2 + 2 * u,
-    (u: number) => 2 - 4 * u,
-    (u: number) => 2 * u,
-  ];
+  return [(u: number) => -2 + 2 * u, (u: number) => 2 - 4 * u, (u: number) => 2 * u];
 }
 
 function cubicDer(): Function[] {

@@ -99,10 +99,6 @@ function rotateMat(mat: mat4, angle: number, axis: vec3) {
   return mat4.multiply(mat, newMat, mat);
 }
 
-function linearInterpolation(
-  start: number,
-  end: number,
-  amount: number
-): number {
+function linearInterpolation(start: number, end: number, amount: number): number {
   return (1 - amount) * start + amount * end;
 }

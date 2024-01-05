@@ -44,13 +44,7 @@ sphereMenu.open();
 function buildSphereMenu(gui: GUI): GUI {
   var sphereMenu = gui.addFolder("Sphere");
   sphereMenu
-    .add(
-      props.sphere,
-      "radius",
-      MIN_SIZE_VALUE,
-      props.sphere.radius,
-      SLIDER_STEP
-    )
+    .add(props.sphere, "radius", MIN_SIZE_VALUE, props.sphere.radius, SLIDER_STEP)
     .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
   return sphereMenu;
 }
@@ -69,22 +63,10 @@ function buildConeMenu(gui: GUI): GUI {
 function buildCylinderMenu(gui: GUI): GUI {
   var cylinderMenu = gui.addFolder("Cylinder");
   cylinderMenu
-    .add(
-      props.cylinder,
-      "radius",
-      MIN_SIZE_VALUE,
-      props.cylinder.radius,
-      SLIDER_STEP
-    )
+    .add(props.cylinder, "radius", MIN_SIZE_VALUE, props.cylinder.radius, SLIDER_STEP)
     .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
   cylinderMenu
-    .add(
-      props.cylinder,
-      "height",
-      MIN_SIZE_VALUE,
-      props.cylinder.height,
-      SLIDER_STEP
-    )
+    .add(props.cylinder, "height", MIN_SIZE_VALUE, props.cylinder.height, SLIDER_STEP)
     .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
   return cylinderMenu;
 }

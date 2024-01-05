@@ -102,10 +102,7 @@ export abstract class Curve {
 
   validateControlPoints(): void {
     const n = this.controlPoints.length;
-    let valid =
-      this.level == CurveLevel.CUADRATIC
-        ? n >= 3 && (n - 1) % 2 === 0
-        : n >= 4 && (n - 1) % 3 === 0;
+    let valid = this.level == CurveLevel.CUADRATIC ? n >= 3 && (n - 1) % 2 === 0 : n >= 4 && (n - 1) % 3 === 0;
     if (!valid) {
       throw new Error("Invalid amount of control points.");
     }

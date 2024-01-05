@@ -19,57 +19,47 @@ export class Drone implements Camera {
   keyDownListener: any;
   mouseListener: any;
 
-  constructor(
-    gl: WebGL,
-    position: vec3 = [0, 0, 0],
-    direction: vec3 = [0, 0, -1]
-  ) {
+  constructor(gl: WebGL, position: vec3 = [0, 0, 0], direction: vec3 = [0, 0, -1]) {
     this.initialPosition = position;
     this.initialDirection = direction;
 
     this.position = position;
     this.direction = direction;
-    this.keyDownListener = document.addEventListener(
-      "keydown",
-      (e: KeyboardEvent) => {
-        const velocity = 1;
-        switch (e.key) {
-          case "ArrowUp":
-          case "w":
-            this.state.fwd = velocity;
-            break;
-          case "ArrowDown":
-          case "s":
-            this.state.fwd = -velocity;
-            break;
-          case "ArrowLeft":
-          case "a":
-            this.state.right = -velocity;
-            break;
-          case "ArrowRight":
-          case "d":
-            this.state.right = velocity;
-        }
+    this.keyDownListener = document.addEventListener("keydown", (e: KeyboardEvent) => {
+      const velocity = 1;
+      switch (e.key) {
+        case "ArrowUp":
+        case "w":
+          this.state.fwd = velocity;
+          break;
+        case "ArrowDown":
+        case "s":
+          this.state.fwd = -velocity;
+          break;
+        case "ArrowLeft":
+        case "a":
+          this.state.right = -velocity;
+          break;
+        case "ArrowRight":
+        case "d":
+          this.state.right = velocity;
       }
-    );
-    this.keyUpListener = document.addEventListener(
-      "keyup",
-      (e: KeyboardEvent) => {
-        switch (e.key) {
-          case "ArrowUp":
-          case "w":
-          case "ArrowDown":
-          case "s":
-            this.state.fwd = 0;
-            break;
-          case "ArrowLeft":
-          case "a":
-          case "ArrowRight":
-          case "d":
-            this.state.right = 0;
-        }
+    });
+    this.keyUpListener = document.addEventListener("keyup", (e: KeyboardEvent) => {
+      switch (e.key) {
+        case "ArrowUp":
+        case "w":
+        case "ArrowDown":
+        case "s":
+          this.state.fwd = 0;
+          break;
+        case "ArrowLeft":
+        case "a":
+        case "ArrowRight":
+        case "d":
+          this.state.right = 0;
       }
-    );
+    });
 
     gl.canvas.onclick = function () {
       gl.canvas.requestPointerLock();
@@ -100,11 +90,7 @@ export class Drone implements Camera {
     rotateMat(transform, -this.state.v, this.side);
     rotateMat(transform, -this.state.u, this.up);
 
-    const dir = vec3.fromValues(
-      this.initialDirection[0],
-      this.initialDirection[1],
-      this.initialDirection[2]
-    );
+    const dir = vec3.fromValues(this.initialDirection[0], this.initialDirection[1], this.initialDirection[2]);
     vec3.transformMat4(dir, dir, transform);
 
     const frictionFactor = 0.5;
@@ -153,10 +139,6 @@ function rotateMat(mat: mat4, angle: number, axis: vec3) {
   return mat4.multiply(mat, newMat, mat);
 }
 
-function linearInterpolation(
-  start: number,
-  end: number,
-  amount: number
-): number {
+function linearInterpolation(start: number, end: number, amount: number): number {
   return (1 - amount) * start + amount * end;
 }

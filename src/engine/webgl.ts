@@ -46,10 +46,7 @@ export class WebGL {
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  async init(
-    vertexShader = vertexShaderPath,
-    fragmentShader = fragmentShaderPath
-  ) {
+  async init(vertexShader = vertexShaderPath, fragmentShader = fragmentShaderPath) {
     await this.setUpShaders(vertexShader, fragmentShader);
     this.setUpMatrices();
     this.cleanGL();
@@ -77,11 +74,7 @@ export class WebGL {
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image); // cargo el bitmap en la GPU
 
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR); // selecciono filtro de magnificacion
-    gl.texParameteri(
-      gl.TEXTURE_2D,
-      gl.TEXTURE_MIN_FILTER,
-      gl.LINEAR_MIPMAP_NEAREST
-    ); // selecciono filtro de minificacion
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST); // selecciono filtro de minificacion
 
     gl.generateMipmap(gl.TEXTURE_2D); // genero los mipmaps
     gl.bindTexture(gl.TEXTURE_2D, null);
@@ -89,13 +82,7 @@ export class WebGL {
   }
 
   setUpMatrices() {
-    mat4.perspective(
-      this.projMatrix,
-      45,
-      this.canvas.width / this.canvas.height,
-      0.1,
-      500.0
-    );
+    mat4.perspective(this.projMatrix, 45, this.canvas.width / this.canvas.height, 0.1, 500.0);
     mat4.identity(this.viewMatrix);
     mat4.translate(this.viewMatrix, this.viewMatrix, [0.0, 0.0, -10.0]);
     this.setMatrixUniforms();
@@ -115,11 +102,7 @@ export class WebGL {
     ]);
 
     const vertexShader = makeShader(this.gl, vertex, this.gl.VERTEX_SHADER);
-    const fragmentShader = makeShader(
-      this.gl,
-      fragment,
-      this.gl.FRAGMENT_SHADER
-    );
+    const fragmentShader = makeShader(this.gl, fragment, this.gl.FRAGMENT_SHADER);
 
     this.gl.attachShader(this.program, vertexShader);
     this.gl.attachShader(this.program, fragmentShader);
@@ -149,21 +132,10 @@ export class WebGL {
 
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-    if (this.showSurface)
-      this.gl.drawElements(
-        method,
-        geometry.index.length,
-        this.gl.UNSIGNED_SHORT,
-        0
-      );
+    if (this.showSurface) this.gl.drawElements(method, geometry.index.length, this.gl.UNSIGNED_SHORT, 0);
     if (this.showLines) {
       this.setDrawColor([0.5, 0.5, 0.5]);
-      this.gl.drawElements(
-        this.gl.LINE_STRIP,
-        geometry.index.length,
-        this.gl.UNSIGNED_SHORT,
-        0
-      );
+      this.gl.drawElements(this.gl.LINE_STRIP, geometry.index.length, this.gl.UNSIGNED_SHORT, 0);
       this.setDrawColor(this.color);
     }
   }
@@ -190,22 +162,14 @@ export class WebGL {
   createBuffer(array: Array<number>): WebGLBuffer {
     const buffer = this.gl.createBuffer()!;
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
-    this.gl.bufferData(
-      this.gl.ARRAY_BUFFER,
-      new Float32Array(array),
-      this.gl.STATIC_DRAW
-    );
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(array), this.gl.STATIC_DRAW);
     return buffer!;
   }
 
   createIndexBuffer(index: Array<number>): WebGLBuffer {
     const buffer = this.gl.createBuffer()!;
     this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, buffer);
-    this.gl.bufferData(
-      this.gl.ELEMENT_ARRAY_BUFFER,
-      new Uint16Array(index),
-      this.gl.STATIC_DRAW
-    );
+    this.gl.bufferData(this.gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(index), this.gl.STATIC_DRAW);
     return buffer;
   }
 
@@ -218,14 +182,7 @@ export class WebGL {
     const attributeLocation = this.gl.getAttribLocation(this.program, name);
     this.gl.enableVertexAttribArray(attributeLocation);
     this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buffer);
-    this.gl.vertexAttribPointer(
-      attributeLocation,
-      size,
-      this.gl.FLOAT,
-      false,
-      0,
-      0
-    );
+    this.gl.vertexAttribPointer(attributeLocation, size, this.gl.FLOAT, false, 0, 0);
   }
 
   setColor(color: number[]) {
@@ -238,18 +195,12 @@ export class WebGL {
     const modelColor = color.length == 0 ? [1.0, 0, 1.0] : color;
 
     const colorUniform = this.gl.getUniformLocation(this.program, "modelColor");
-    this.gl.uniform3fv(
-      colorUniform,
-      vec3.fromValues(modelColor[0], modelColor[1], modelColor[2])
-    );
+    this.gl.uniform3fv(colorUniform, vec3.fromValues(modelColor[0], modelColor[1], modelColor[2]));
   }
 
   setNormalColoring(bool: boolean) {
     this.normalColoring = bool;
-    const normalColoringUniform = this.gl.getUniformLocation(
-      this.program,
-      "normalColoring"
-    );
+    const normalColoringUniform = this.gl.getUniformLocation(this.program, "normalColoring");
     this.gl.uniform1i(normalColoringUniform, Number(bool));
     return this;
   }
@@ -272,10 +223,7 @@ export class WebGL {
 
   setUseTexture(bool: boolean) {
     this.useTexture = bool;
-    const useTextureUniform = this.gl.getUniformLocation(
-      this.program,
-      "useTexture"
-    );
+    const useTextureUniform = this.gl.getUniformLocation(this.program, "useTexture");
     this.gl.uniform1i(useTextureUniform, Number(bool));
     return this;
   }
@@ -306,10 +254,7 @@ export class WebGL {
   }
 
   setMatrix(name: string, matrix: mat4) {
-    var matrixUniform: WebGLUniformLocation = this.gl.getUniformLocation(
-      this.program,
-      name
-    )!;
+    var matrixUniform: WebGLUniformLocation = this.gl.getUniformLocation(this.program, name)!;
     this.gl.uniformMatrix4fv(matrixUniform, false, matrix);
   }
 }

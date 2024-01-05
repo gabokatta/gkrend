@@ -49,11 +49,7 @@ export class Cylinder implements Geometry {
 
     let crossVec = (vec1: number[], vec2: number[]) => {
       let _vecF = vec3.create();
-      vec3.cross(
-        _vecF,
-        vec3.fromValues(vec1[0], vec1[1], vec1[2]),
-        vec3.fromValues(vec2[0], vec2[1], vec2[2])
-      );
+      vec3.cross(_vecF, vec3.fromValues(vec1[0], vec1[1], vec1[2]), vec3.fromValues(vec2[0], vec2[1], vec2[2]));
       return [_vecF[0], _vecF[1], _vecF[2]];
     };
 

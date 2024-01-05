@@ -219,66 +219,19 @@ export interface Sweepable {
   discretizePath(delta: number): any;
 }
 
-export function levelMatrices(
-  data: any,
-  index: number
-): { posM: mat4; norM: mat4 } {
+export function levelMatrices(data: any, index: number): { posM: mat4; norM: mat4 } {
   return {
-    posM: positionMatrix(
-      data.n[index],
-      data.b[index],
-      data.t[index],
-      data.p[index]
-    ),
-    norM: normalMatrix(
-      data.n[index],
-      data.b[index],
-      data.t[index],
-      data.p[index]
-    ),
+    posM: positionMatrix(data.n[index], data.b[index], data.t[index], data.p[index]),
+    norM: normalMatrix(data.n[index], data.b[index], data.t[index], data.p[index]),
   };
 }
 
 function positionMatrix(n: vec3, b: vec3, t: vec3, p: vec3): mat4 {
-  return mat4.fromValues(
-    n[0],
-    n[1],
-    n[2],
-    0,
-    b[0],
-    b[1],
-    b[2],
-    0,
-    t[0],
-    t[1],
-    t[2],
-    0,
-    p[0],
-    p[1],
-    p[2],
-    1
-  );
+  return mat4.fromValues(n[0], n[1], n[2], 0, b[0], b[1], b[2], 0, t[0], t[1], t[2], 0, p[0], p[1], p[2], 1);
 }
 
 function normalMatrix(n: vec3, b: vec3, t: vec3, _p: vec3): mat4 {
-  return mat4.fromValues(
-    n[0],
-    n[1],
-    n[2],
-    0,
-    b[0],
-    b[1],
-    b[2],
-    0,
-    t[0],
-    t[1],
-    t[2],
-    0,
-    0,
-    0,
-    0,
-    0
-  );
+  return mat4.fromValues(n[0], n[1], n[2], 0, b[0], b[1], b[2], 0, t[0], t[1], t[2], 0, 0, 0, 0, 0);
 }
 
 function negateVec(vec: vec3): vec3 {

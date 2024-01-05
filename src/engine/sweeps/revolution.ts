@@ -27,11 +27,7 @@ export class Revolution implements Sweepable {
 
     for (let u = 0; u <= 1.001; u += delta) {
       let binormal = vec3.fromValues(0, 1, 0);
-      let tangent = vec3.fromValues(
-        Math.cos(u * this.angle),
-        0,
-        Math.sin(u * this.angle)
-      );
+      let tangent = vec3.fromValues(Math.cos(u * this.angle), 0, Math.sin(u * this.angle));
 
       points.push(vec3.fromValues(0, 0, 0));
       binormals.push(vec3.fromValues(0, 1, 0));
