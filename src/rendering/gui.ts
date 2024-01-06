@@ -1,6 +1,7 @@
 import { GUI } from "dat.gui";
 import { Shapes, props } from "./properties";
-import { ANIMATION, changeAnimationStatus } from "./animation";
+import { ANIMATION, changeAnimationStatus, setAnimationVelocity } from "./animation";
+import { scene } from "../main";
 
 const MIN_SIZE_VALUE = 1;
 const SLIDER_STEP = 1;
@@ -10,18 +11,28 @@ var gui = new GUI({ autoPlace: false, width: 225 });
 document.querySelector(".gui-container")?.append(gui.domElement);
 
 var colorFolder: GUI = gui.addFolder("Color");
-colorFolder.addColor(props, "shapeColor");
+colorFolder.addColor(props, "shapeColor").onChange(() => scene.updateColor(props.shapeColor));
 
-var sizingFolder: GUI = gui.addFolder("Sizing");
+export var sizingFolder: GUI = gui.addFolder("Sizing");
 var sphereMenu = buildSphereMenu(sizingFolder);
 var coneMenu = buildConeMenu(sizingFolder);
 var cubeMenu = buildCubeMenu(sizingFolder);
 var cylinderMenu = buildCylinderMenu(sizingFolder);
 var sizeChildren = [coneMenu, cubeMenu, sphereMenu, cylinderMenu];
 
-var animationFolder: GUI = gui.addFolder("Animation");
-animationFolder.add(props, "rotspeed", 1, 10, 1).step(1);
-animationFolder.add(props, "scalespeed", 1, 10).step(1);
+export var animationFolder: GUI = gui.addFolder("Animation");
+animationFolder
+  .add(props, "rotspeed", 1, 3, 1)
+  .step(1)
+  .onChange((value) => {
+    setAnimationVelocity(props.animations, ANIMATION.ROTATE, value);
+  });
+animationFolder
+  .add(props, "scalespeed", 1, 3)
+  .step(1)
+  .onChange((value) => {
+    setAnimationVelocity(props.animations, ANIMATION.RESIZE, value);
+  });
 animationFolder.add(props, "rotate").onChange((value) => {
   props.rotate = value;
   changeAnimationStatus(props.animations, ANIMATION.ROTATE, value);
@@ -43,45 +54,39 @@ sphereMenu.open();
 
 function buildSphereMenu(gui: GUI): GUI {
   var sphereMenu = gui.addFolder("Sphere");
+  var sphere = props.sphere;
   sphereMenu
-    .add(props.sphere, "radius", MIN_SIZE_VALUE, props.sphere.radius, SLIDER_STEP)
-    .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
+    .add(sphere, "radius", MIN_SIZE_VALUE, sphere.radius, SLIDER_STEP)
+    .setValue(sphere.radius / INITIAL_VALUE_DIVISOR);
   return sphereMenu;
 }
 
 function buildConeMenu(gui: GUI): GUI {
   var coneMenu = gui.addFolder("Cone");
-  coneMenu
-    .add(props.cone, "radius", MIN_SIZE_VALUE, props.cone.radius, SLIDER_STEP)
-    .setValue(props.cone.radius / INITIAL_VALUE_DIVISOR);
-  coneMenu
-    .add(props.cone, "height", MIN_SIZE_VALUE, props.cone.height, SLIDER_STEP)
-    .setValue(props.cone.height / INITIAL_VALUE_DIVISOR);
+  var cone = props.cone;
+  coneMenu.add(cone, "radius", MIN_SIZE_VALUE, cone.radius, SLIDER_STEP).setValue(cone.radius / INITIAL_VALUE_DIVISOR);
+  coneMenu.add(cone, "height", MIN_SIZE_VALUE, cone.height, SLIDER_STEP).setValue(cone.height / INITIAL_VALUE_DIVISOR);
   return coneMenu;
 }
 
 function buildCylinderMenu(gui: GUI): GUI {
   var cylinderMenu = gui.addFolder("Cylinder");
+  var cylinder = props.cylinder;
   cylinderMenu
-    .add(props.cylinder, "radius", MIN_SIZE_VALUE, props.cylinder.radius, SLIDER_STEP)
-    .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
+    .add(cylinder, "radius", MIN_SIZE_VALUE, cylinder.radius, SLIDER_STEP)
+    .setValue(cylinder.radius / INITIAL_VALUE_DIVISOR);
   cylinderMenu
-    .add(props.cylinder, "height", MIN_SIZE_VALUE, props.cylinder.height, SLIDER_STEP)
-    .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
+    .add(cylinder, "height", MIN_SIZE_VALUE, cylinder.height, SLIDER_STEP)
+    .setValue(cylinder.height / INITIAL_VALUE_DIVISOR);
   return cylinderMenu;
 }
 
 function buildCubeMenu(gui: GUI): GUI {
   var cubeMenu = gui.addFolder("Cube");
-  cubeMenu
-    .add(props.cube, "depth", MIN_SIZE_VALUE, props.cube.depth, SLIDER_STEP)
-    .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
-  cubeMenu
-    .add(props.cube, "height", MIN_SIZE_VALUE, props.cube.height, SLIDER_STEP)
-    .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
-  cubeMenu
-    .add(props.cube, "width", MIN_SIZE_VALUE, props.cube.width, SLIDER_STEP)
-    .setValue(props.sphere.radius / INITIAL_VALUE_DIVISOR);
+  var cube = props.cube;
+  cubeMenu.add(cube, "depth", MIN_SIZE_VALUE, cube.depth, SLIDER_STEP).setValue(cube.depth / INITIAL_VALUE_DIVISOR);
+  cubeMenu.add(cube, "height", MIN_SIZE_VALUE, cube.height, SLIDER_STEP).setValue(cube.height / INITIAL_VALUE_DIVISOR);
+  cubeMenu.add(cube, "width", MIN_SIZE_VALUE, cube.width, SLIDER_STEP).setValue(cube.width / INITIAL_VALUE_DIVISOR);
   return cubeMenu;
 }
 
@@ -120,3 +125,7 @@ function renderShapeMenu(e: Event) {
 function hideFolders(folders: GUI[]) {
   folders.forEach((f) => f.hide());
 }
+
+sizeChildren.forEach((gui) => {
+  gui.__controllers.forEach((controller) => controller.onChange(() => scene.updateObject()));
+});

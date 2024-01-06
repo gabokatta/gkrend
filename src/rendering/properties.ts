@@ -1,9 +1,5 @@
-import { Cone } from "../engine/shapes/cone";
-import { Cube } from "../engine/shapes/cube";
-import { Cylinder } from "../engine/shapes/cylinder";
-import { Sphere } from "../engine/shapes/sphere";
 import { DrawMethod } from "../engine/webgl";
-import { ANIMATIONS } from "./animation";
+import { ANIMATIONS, DEFAULT_VELOCITY } from "./animation";
 
 export enum Cameras {
   DRONE,
@@ -30,18 +26,16 @@ export var props = {
   camera: Cameras.ORBITAL,
   render: DrawMethod.Smooth,
 
-  shapeColor: [255, 0, 255],
+  shapeColor: [100, 200, 100],
 
   animations: ANIMATIONS,
   rotate: false,
-  rotspeed: 2,
+  rotspeed: DEFAULT_VELOCITY,
   scale: false,
-  scalespeed: 2,
+  scalespeed: DEFAULT_VELOCITY,
 
-  // Parameters will determine maximum size.
-  // Actual initial render will be set to half the amounts to allow incentivize slider usage.
-  sphere: new Sphere(5),
-  cone: new Cone(5, 7),
-  cylinder: new Cylinder(5, 7),
-  cube: new Cube(5, 5, 5),
+  sphere: { radius: 4 },
+  cone: { radius: 5, height: 7 },
+  cylinder: { radius: 4, height: 7 },
+  cube: { width: 5, height: 5, depth: 5 },
 };
