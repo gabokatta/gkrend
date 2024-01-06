@@ -41,7 +41,6 @@ export class WebGL {
 
   cleanGL() {
     this.gl.enable(this.gl.DEPTH_TEST);
-    this.gl.clearColor(0.1, 0.1, 0.2, 1.0);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
   }
@@ -116,7 +115,7 @@ export class WebGL {
   }
 
   draw(geometry: any, method: DrawMethod = this.method) {
-    this.setMatrixUniforms();
+    this.setUpMatrices();
     const vertexBuffer = this.createBuffer(geometry.position);
     const normalBuffer = this.createBuffer(geometry.normal);
     const binormalBuffer = this.createBuffer(geometry.binormal);

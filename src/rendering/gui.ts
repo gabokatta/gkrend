@@ -13,11 +13,10 @@ document.querySelector(".gui-container")?.append(gui.domElement);
 var colorFolder: GUI = gui.addFolder("Color");
 colorFolder.addColor(props, "shapeColor").onChange(() => scene.updateColor(props.shapeColor));
 
-export var sizingFolder: GUI = gui.addFolder("Sizing");
-var sphereMenu = buildSphereMenu(sizingFolder);
-var coneMenu = buildConeMenu(sizingFolder);
-var cubeMenu = buildCubeMenu(sizingFolder);
-var cylinderMenu = buildCylinderMenu(sizingFolder);
+var sphereMenu = buildSphereMenu(gui);
+var coneMenu = buildConeMenu(gui);
+var cubeMenu = buildCubeMenu(gui);
+var cylinderMenu = buildCylinderMenu(gui);
 var sizeChildren = [coneMenu, cubeMenu, sphereMenu, cylinderMenu];
 
 export var animationFolder: GUI = gui.addFolder("Animation");
@@ -50,7 +49,6 @@ animationFolder.add(props, "scale").onChange((value) => {
 hideFolders(sizeChildren);
 animationFolder.open();
 colorFolder.open();
-sizingFolder.open();
 sphereMenu.show();
 sphereMenu.open();
 
