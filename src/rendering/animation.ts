@@ -19,7 +19,13 @@ export interface Animation {
 }
 
 export class Rotate implements Animation {
-  public axis: number[] = [1, 0, 1];
+  public static AXIS: Map<string, number[]> = new Map<string, number[]>([
+    ["X", [1, 0, 0]],
+    ["Y", [0, 1, 0]],
+    ["Z", [0, 0, 1]],
+  ]);
+
+  public axis: number[] = Rotate.AXIS.get("X")!;
 
   public getTransformationFrame(t: number): Transformation {
     return Transformation.rotation(t, this.axis);

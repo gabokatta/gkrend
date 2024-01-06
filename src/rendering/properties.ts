@@ -31,6 +31,7 @@ export var props = {
   animations: ANIMATIONS,
   rotate: false,
   rotspeed: DEFAULT_VELOCITY,
+  rotaxis: "X",
   scale: false,
   scalespeed: DEFAULT_VELOCITY,
 

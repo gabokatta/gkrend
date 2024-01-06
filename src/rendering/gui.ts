@@ -1,6 +1,6 @@
 import { GUI } from "dat.gui";
 import { Shapes, props } from "./properties";
-import { ANIMATION, changeAnimationStatus, setAnimationVelocity } from "./animation";
+import { ANIMATION, Rotate, changeAnimationStatus, setAnimationVelocity } from "./animation";
 import { scene } from "../main";
 
 const MIN_SIZE_VALUE = 1;
@@ -21,6 +21,10 @@ var cylinderMenu = buildCylinderMenu(sizingFolder);
 var sizeChildren = [coneMenu, cubeMenu, sphereMenu, cylinderMenu];
 
 export var animationFolder: GUI = gui.addFolder("Animation");
+animationFolder.add(props, "rotaxis", ["X", "Y", "Z"]).onChange((value: string) => {
+  var rotateAnimation = <Rotate>props.animations.get(ANIMATION.ROTATE)!.animation;
+  rotateAnimation.axis = Rotate.AXIS.get(value)!;
+});
 animationFolder
   .add(props, "rotspeed", 1, 3, 1)
   .step(1)
