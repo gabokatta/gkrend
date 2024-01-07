@@ -27,7 +27,9 @@ export class Scene {
 
   async initScene() {
     await this.gl.init();
+    const texturesPromise = this.gl.initTextures(Array.from(TEXTURES.values()));
     this.tick();
+    await texturesPromise;
   }
 
   tick() {
@@ -100,8 +102,5 @@ textureButton.addEventListener("click", toggleTextures);
 
 async function toggleTextures() {
   props.texture = NEXT_TEXTURE.get(props.texture)!;
-  if (!scene.gl.loadedTextures.has(TEXTURES.get(props.texture)!)) {
-    await scene.gl.initTextures([TEXTURES.get(props.texture)!]);
-  }
   scene.updateTexture(props.texture);
 }
