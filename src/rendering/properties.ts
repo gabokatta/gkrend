@@ -1,4 +1,3 @@
-import { DrawMethod } from "../engine/webgl";
 import { ANIMATIONS, DEFAULT_VELOCITY } from "./animation";
 
 import grass from "../engine/textures/grass.png";
@@ -12,16 +11,17 @@ export enum Textures {
   GRASS,
 }
 
+export enum Render {
+  SMOOTH,
+  NORMAL,
+  WIREFRAME,
+}
+
 export const TEXTURES = new Map<Textures, string>([
   [Textures.LAVA, lava],
   [Textures.GRASS, grass],
   [Textures.WATER, water],
 ]);
-
-export enum Cameras {
-  DRONE,
-  ORBITAL,
-}
 
 export enum Shapes {
   CONE = "cone",
@@ -33,8 +33,7 @@ export enum Shapes {
 export var props = {
   shape: Shapes.SPHERE,
   texture: Textures.NONE,
-  camera: Cameras.ORBITAL,
-  render: DrawMethod.Smooth,
+  render: Render.SMOOTH,
 
   shapeColor: [100, 200, 100],
 

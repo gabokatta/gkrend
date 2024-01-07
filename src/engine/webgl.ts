@@ -108,7 +108,7 @@ export class WebGL {
   }
 
   draw(geometry: any, method: DrawMethod = this.method) {
-    this.setUpMatrices();
+    this.setMatrixUniforms();
     const vertexBuffer = this.createBuffer(geometry.position);
     const normalBuffer = this.createBuffer(geometry.normal);
     const binormalBuffer = this.createBuffer(geometry.binormal);
