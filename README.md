@@ -1,2 +1,2 @@
 # gkrend
-NES Inspired - Simple 3D Rendering Engine
+GBA Inspired - Simple 3D Rendering Engine
