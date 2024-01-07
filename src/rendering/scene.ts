@@ -22,7 +22,7 @@ export class Scene {
     this.canvas = canvas;
     this.gl = new WebGL(canvas);
     this.object = new Object3D(
-      currentGeometry(props.shape),
+      undefined,
       [Transformation.rotation(toRads(60), [-1, -1, 0])],
       props.shapeColor.map((value) => value / 255)
     );
@@ -31,6 +31,7 @@ export class Scene {
 
   async initScene() {
     await this.gl.init();
+    this.object.geometry = currentGeometry(props.shape);
     const texturesPromise = this.gl.initTextures(Array.from(TEXTURES.values()));
     this.tick();
     await texturesPromise;

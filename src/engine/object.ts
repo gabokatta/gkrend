@@ -19,7 +19,9 @@ export class Object3D {
     this.geometry = geometry;
     this.color = color;
 
-    this.transformations.forEach((t) => this.applyTransformation(t));
+    if (geometry) {
+      this.transformations.forEach((t) => this.applyTransformation(t));
+    }
   }
 
   draw(gl: WebGL, parent: mat4 = mat4.create()) {

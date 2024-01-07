@@ -31,7 +31,7 @@ export enum Shapes {
 }
 
 export var props = {
-  shape: Shapes.SPHERE,
+  shape: Shapes.TORUS,
   texture: Textures.NONE,
   render: Render.SMOOTH,
 

@@ -333,23 +333,20 @@ varying vec2 vUV;
 
 void main(void) {
   vec3 color;
-
+  vec3 lightDirection = normalize(vec3(1.0, 5.0, 3.0));
+  float ambient = 0.6;
   if (useTexture) {
     vec4 textureColor = texture2D(texture, vUV);
-    vec3 lightDirection = normalize(vec3(1.0, 1.0, 1.0));
     float diffuse = max(0.0, dot(vNormal, lightDirection));
-    float ambient = 0.3;
-    float lightIntensity = ambient + diffuse;
-    textureColor.rgb *= lightIntensity;
+    float textlightIntensity = ambient + diffuse;
+    textureColor.rgb *= textlightIntensity;
     color = textureColor.rgb;
   } else if (normalColoring) {
     color = vec3(0.5, 0.5, 0.5) + 0.5 * vNormal;
   } else {
-    vec3 lightDirection = normalize(vec3(1.0, 1.0, 1.0));
     float diffuse = max(0.0, dot(vNormal, lightDirection));
-    float ambient = 0.3;
-    float lightIntensity = ambient + diffuse;
-    color = modelColor * lightIntensity;
+    float colorlightIntensity = (1.5*ambient) + diffuse;
+    color = modelColor * colorlightIntensity;
   }
 
   gl_FragColor = vec4(color, 1.0);
