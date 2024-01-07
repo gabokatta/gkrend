@@ -14,6 +14,7 @@ export class Scene {
   gl: WebGL;
   t: number = 0;
   object: Object3D;
+  textureInit: boolean = false;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -27,8 +28,6 @@ export class Scene {
 
   async initScene() {
     await this.gl.init();
-    await this.gl.initTextures(Array.from(TEXTURES.values()));
-    this.updateTexture(props.texture);
     this.tick();
   }
 
@@ -89,3 +88,22 @@ shapeButtons.forEach((btn) => {
     scene.updateObject();
   });
 });
+
+const NEXT_TEXTURE = new Map<Textures, Textures>([
+  [Textures.NONE, Textures.GRASS],
+  [Textures.GRASS, Textures.LAVA],
+  [Textures.LAVA, Textures.WATER],
+  [Textures.WATER, Textures.NONE],
+]);
+
+const textureButton = document.getElementById("texture")!;
+textureButton.addEventListener("click", toggleTextures);
+
+async function toggleTextures() {
+  if (!scene.textureInit) {
+    await scene.gl.initTextures(Array.from(TEXTURES.values()));
+    scene.textureInit = true;
+  }
+  props.texture = NEXT_TEXTURE.get(props.texture)!;
+  scene.updateTexture(props.texture);
+}
