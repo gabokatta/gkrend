@@ -1,9 +1,5 @@
 import { mat4, vec3 } from "gl-matrix";
 
-const vertexShaderPath = "src/engine/shaders/vertex.glsl";
-const fragmentShaderPath = "src/engine/shaders/fragment.glsl";
-const uvTexturePath = "src/engine/textures/uv.jpg";
-
 export class WebGL {
   public canvas: HTMLCanvasElement;
   public gl: WebGLRenderingContext;
@@ -18,7 +14,9 @@ export class WebGL {
 
   public color: number[];
 
+  public loadedTextures: Map<string, WebGLTexture> = new Map<string, WebGLTexture>();
   public useTexture: boolean = false;
+
   public normalColoring: boolean = false;
   public showLines: boolean = false;
   public showSurface: boolean = true;
@@ -45,8 +43,8 @@ export class WebGL {
     this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
   }
 
-  async init(vertexShader = vertexShaderPath, fragmentShader = fragmentShaderPath) {
-    await this.setUpShaders(vertexShader, fragmentShader);
+  async init() {
+    await this.setUpShaders(vertex, fragment);
     this.setUpMatrices();
     this.cleanGL();
     this.setColor(this.color);
@@ -55,10 +53,10 @@ export class WebGL {
     return this;
   }
 
-  async initTextures(texturePaths: string[] = [uvTexturePath]) {
+  async initTextures(texturePaths: string[]) {
     for (let path of texturePaths) {
       let texture = await this.loadTexture(path);
-      this.setTexture(texture);
+      this.loadedTextures.set(path, texture);
     }
     return this;
   }
@@ -95,13 +93,8 @@ export class WebGL {
   }
 
   async setUpShaders(vertexFile: string, fragmentFile: string) {
-    const [vertex, fragment] = await Promise.all([
-      fetch(vertexFile).then(handleResponse),
-      fetch(fragmentFile).then(handleResponse),
-    ]);
-
-    const vertexShader = makeShader(this.gl, vertex, this.gl.VERTEX_SHADER);
-    const fragmentShader = makeShader(this.gl, fragment, this.gl.FRAGMENT_SHADER);
+    const vertexShader = makeShader(this.gl, vertexFile, this.gl.VERTEX_SHADER);
+    const fragmentShader = makeShader(this.gl, fragmentFile, this.gl.FRAGMENT_SHADER);
 
     this.gl.attachShader(this.program, vertexShader);
     this.gl.attachShader(this.program, fragmentShader);
@@ -214,10 +207,12 @@ export class WebGL {
     return this;
   }
 
-  setTexture(texture: WebGLTexture) {
-    this.gl.uniform1i(this.gl.getUniformLocation(this.program, "texture"), 0);
-    this.gl.activeTexture(this.gl.TEXTURE0);
-    this.gl.bindTexture(this.gl.TEXTURE_2D, texture);
+  setTexture(texture: string) {
+    if (this.loadedTextures.has(texture)) {
+      this.gl.uniform1i(this.gl.getUniformLocation(this.program, "texture"), 0);
+      this.gl.activeTexture(this.gl.TEXTURE0);
+      this.gl.bindTexture(this.gl.TEXTURE_2D, this.loadedTextures.get(texture)!);
+    }
   }
 
   setUseTexture(bool: boolean) {
@@ -270,11 +265,6 @@ function makeShader(gl: WebGLRenderingContext, src: string, type: GLenum) {
   return shader;
 }
 
-function handleResponse(response: Response) {
-  if (!response.ok) throw new Error("Error fetching resource");
-  return response.text();
-}
-
 export enum DrawMethod {
   Smooth = WebGLRenderingContext.TRIANGLE_STRIP,
   LineStrip = WebGLRenderingContext.LINE_STRIP,
@@ -294,3 +284,67 @@ export function loadImage(path: string): Promise<HTMLImageElement> {
     };
   });
 }
+
+const vertex: string = ` 
+precision highp float;
+
+attribute vec3 aVertexPosition;
+attribute vec3 aVertexNormal;
+attribute vec3 aVertexTangent;
+attribute vec3 aVertexBinormal;
+attribute vec2 aVertexUV;
+
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 projMatrix;
+uniform mat4 normalMatrix;
+
+varying vec3 vPosWorld;
+varying vec3 vNormal;
+varying vec3 vTangent;
+varying vec3 vBinormal;
+varying vec2 vUV;
+
+void main(void) {
+  gl_Position = projMatrix * viewMatrix * modelMatrix * vec4(aVertexPosition, 1.0);
+
+  vPosWorld=(modelMatrix*vec4(aVertexPosition,1.0)).xyz;
+  vNormal=normalize((normalMatrix*vec4(aVertexNormal,1.0)).xyz);
+  vTangent=normalize((normalMatrix*vec4(aVertexTangent,1.0)).xyz);
+  vBinormal=normalize((normalMatrix*vec4(aVertexBinormal,1.0)).xyz);
+  vUV=aVertexUV;
+}
+`;
+
+const fragment = `
+precision highp float;
+
+uniform vec3 modelColor;
+uniform bool normalColoring;
+uniform bool useTexture;
+
+uniform sampler2D texture;
+
+varying vec3 vPosWorld;
+varying vec3 vNormal;
+varying vec3 vTangent;
+varying vec3 vBinormal;
+varying vec2 vUV;
+
+void main(void) {
+
+  vec3 normalColor = vec3(0.5, 0.5, 0.5) + 0.5 * vNormal;
+  float lightIntensity = 0.6 + 0.15*vNormal.y + 0.05 * vNormal.z + 0.05 * vNormal.x; 
+
+  if (useTexture) {     
+    vec4 textureColor=texture2D(texture, vUV); 
+    gl_FragColor = vec4(textureColor.xyz,1.0);
+  }
+  else if ( normalColoring ) {
+    gl_FragColor = vec4(normalColor, 1.0);
+  } 
+  else {
+    gl_FragColor = vec4(modelColor*lightIntensity, 1.0);
+  }
+}
+`;

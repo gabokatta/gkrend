@@ -1,16 +1,26 @@
 import { DrawMethod } from "../engine/webgl";
 import { ANIMATIONS, DEFAULT_VELOCITY } from "./animation";
 
-export enum Cameras {
-  DRONE,
-  ORBITAL,
-}
+import grass from "../engine/textures/grass.png";
+import lava from "../engine/textures/lava.png";
+import water from "../engine/textures/water.png";
 
 export enum Textures {
   NONE,
   LAVA,
   WATER,
   GRASS,
+}
+
+export const TEXTURES = new Map<Textures, string>([
+  [Textures.LAVA, lava],
+  [Textures.GRASS, grass],
+  [Textures.WATER, water],
+]);
+
+export enum Cameras {
+  DRONE,
+  ORBITAL,
 }
 
 export enum Shapes {

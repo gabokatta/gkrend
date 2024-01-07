@@ -7,7 +7,7 @@ import { Sphere } from "../engine/shapes/sphere";
 import { WebGL } from "../engine/webgl";
 import { scene } from "../main";
 import { applyAnimations, toRads } from "./animation";
-import { Shapes, props } from "./properties";
+import { Shapes, TEXTURES, Textures, props } from "./properties";
 
 export class Scene {
   public canvas: HTMLCanvasElement;
@@ -27,6 +27,8 @@ export class Scene {
 
   async initScene() {
     await this.gl.init();
+    await this.gl.initTextures(Array.from(TEXTURES.values()));
+    this.updateTexture(props.texture);
     this.tick();
   }
 
@@ -46,6 +48,15 @@ export class Scene {
 
   updateColor(color: number[]) {
     this.object.color = color.map((value) => value / 255);
+  }
+
+  updateTexture(selectedTexture: Textures) {
+    if (selectedTexture == Textures.NONE) {
+      this.object.useTexture = false;
+    } else {
+      this.gl.setTexture(TEXTURES.get(selectedTexture)!);
+      this.object.useTexture = true;
+    }
   }
 
   clean() {
