@@ -64,11 +64,13 @@ export class Orbital implements Camera {
         this.isFingerDown = true;
         this.touchStartPosition.x = e.touches[0].clientX;
         this.touchStartPosition.y = e.touches[0].clientY;
+        e.preventDefault();
       }
     });
 
     this.touchMoveListener = gl.canvas.addEventListener("touchmove", (e) => {
       if (this.isFingerDown && e.touches.length === 1) {
+        e.preventDefault();
         const movementX = e.touches[0].clientX - this.touchStartPosition.x;
         const movementY = e.touches[0].clientY - this.touchStartPosition.y;
 
