@@ -2,9 +2,9 @@ import { Camera } from "../engine/cameras/camera";
 import { Orbital } from "../engine/cameras/orbital";
 import { Geometry } from "../engine/geometry";
 import { Object3D, Transformation } from "../engine/object";
-import { Cone } from "../engine/shapes/cone";
-import { Cube } from "../engine/shapes/cube";
 import { Cylinder } from "../engine/shapes/cylinder";
+import { Plane } from "../engine/shapes/plane";
+import { SineTube } from "../engine/shapes/sinetube";
 import { Sphere } from "../engine/shapes/sphere";
 import { WebGL } from "../engine/webgl";
 import { scene } from "../main";
@@ -23,7 +23,7 @@ export class Scene {
     this.gl = new WebGL(canvas);
     this.object = new Object3D(
       currentGeometry(props.shape),
-      [Transformation.rotation(toRads(60), [0, -1, 0])],
+      [Transformation.rotation(toRads(60), [1, -1, 0])],
       props.shapeColor.map((value) => value / 255)
     );
     this.camera = new Orbital(this.gl);
@@ -93,17 +93,22 @@ export class Scene {
 
 function currentGeometry(shape: Shapes): Geometry {
   switch (shape) {
-    case Shapes.CONE: {
-      return new Cone(props.cone.radius, props.cone.height);
-    }
     case Shapes.SPHERE: {
       return new Sphere(props.sphere.radius);
     }
     case Shapes.CYLINDER: {
       return new Cylinder(props.cylinder.radius, props.cylinder.height);
     }
-    case Shapes.CUBE: {
-      return new Cube(props.cube.width, props.cube.height, props.cube.depth);
+    case Shapes.PLANE: {
+      return new Plane(props.plane.width, props.plane.height);
+    }
+    case Shapes.SINETUBE: {
+      return new SineTube(
+        props.sinetube.radius,
+        props.sinetube.length,
+        props.sinetube.amplitude,
+        props.sinetube.height
+      );
     }
   }
 }

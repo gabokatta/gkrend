@@ -14,10 +14,10 @@ var colorFolder: GUI = gui.addFolder("Color");
 colorFolder.addColor(props, "shapeColor").onChange(() => scene.updateColor(props.shapeColor));
 
 var sphereMenu = buildSphereMenu(gui);
-var coneMenu = buildConeMenu(gui);
-var cubeMenu = buildCubeMenu(gui);
+var planeMenu = buildPlaneMenu(gui);
 var cylinderMenu = buildCylinderMenu(gui);
-var sizeChildren = [coneMenu, cubeMenu, sphereMenu, cylinderMenu];
+var sinetubeMenu = buildSineTubeMenu(gui);
+var sizeChildren = [sinetubeMenu, planeMenu, sphereMenu, cylinderMenu];
 
 export var animationFolder: GUI = gui.addFolder("Animation");
 animationFolder.add(props, "rotaxis", ["X", "Y", "Z"]).onChange((value: string) => {
@@ -63,14 +63,6 @@ function buildSphereMenu(gui: GUI): GUI {
   return sphereMenu;
 }
 
-function buildConeMenu(gui: GUI): GUI {
-  var coneMenu = gui.addFolder("Cone");
-  var cone = props.cone;
-  coneMenu.add(cone, "radius", MIN_SIZE_VALUE, cone.radius, SLIDER_STEP).setValue(cone.radius / INITIAL_VALUE_DIVISOR);
-  coneMenu.add(cone, "height", MIN_SIZE_VALUE, cone.height, SLIDER_STEP).setValue(cone.height / INITIAL_VALUE_DIVISOR);
-  return coneMenu;
-}
-
 function buildCylinderMenu(gui: GUI): GUI {
   var cylinderMenu = gui.addFolder("Cylinder");
   var cylinder = props.cylinder;
@@ -83,13 +75,28 @@ function buildCylinderMenu(gui: GUI): GUI {
   return cylinderMenu;
 }
 
-function buildCubeMenu(gui: GUI): GUI {
-  var cubeMenu = gui.addFolder("Cube");
-  var cube = props.cube;
-  cubeMenu.add(cube, "depth", MIN_SIZE_VALUE, cube.depth, SLIDER_STEP).setValue(cube.depth / INITIAL_VALUE_DIVISOR);
-  cubeMenu.add(cube, "height", MIN_SIZE_VALUE, cube.height, SLIDER_STEP).setValue(cube.height / INITIAL_VALUE_DIVISOR);
-  cubeMenu.add(cube, "width", MIN_SIZE_VALUE, cube.width, SLIDER_STEP).setValue(cube.width / INITIAL_VALUE_DIVISOR);
-  return cubeMenu;
+function buildSineTubeMenu(gui: GUI): GUI {
+  var sineTubeMenu = gui.addFolder("Sine Tube");
+  var sineTube = props.sinetube;
+  sineTubeMenu
+    .add(sineTube, "radius", MIN_SIZE_VALUE, sineTube.radius, SLIDER_STEP)
+    .setValue(sineTube.radius / INITIAL_VALUE_DIVISOR);
+  sineTubeMenu.add(sineTube, "length", 0.1, sineTube.length, 0.1).setValue(sineTube.length / INITIAL_VALUE_DIVISOR);
+  sineTubeMenu
+    .add(sineTube, "height", MIN_SIZE_VALUE, sineTube.height, 0.1)
+    .setValue(sineTube.height / INITIAL_VALUE_DIVISOR);
+  sineTubeMenu.add(sineTube, "amplitude", 0.1, sineTube.amplitude, 0.1).setValue(0.5);
+  return sineTubeMenu;
+}
+
+function buildPlaneMenu(gui: GUI): GUI {
+  var planeMenu = gui.addFolder("Plane");
+  var plane = props.plane;
+  planeMenu
+    .add(plane, "height", MIN_SIZE_VALUE, plane.height, SLIDER_STEP)
+    .setValue(plane.height / INITIAL_VALUE_DIVISOR);
+  planeMenu.add(plane, "width", MIN_SIZE_VALUE, plane.width, SLIDER_STEP).setValue(plane.width / INITIAL_VALUE_DIVISOR);
+  return planeMenu;
 }
 
 const shapeButtons = document.querySelectorAll(".shape-btn");
@@ -106,19 +113,19 @@ function renderShapeMenu(e: Event) {
       sphereMenu.open();
       break;
     }
-    case Shapes.CONE: {
-      coneMenu.show();
-      coneMenu.open();
-      break;
-    }
     case Shapes.CYLINDER: {
       cylinderMenu.show();
       cylinderMenu.open();
       break;
     }
-    case Shapes.CUBE: {
-      cubeMenu.show();
-      cubeMenu.open();
+    case Shapes.PLANE: {
+      planeMenu.show();
+      planeMenu.open();
+      break;
+    }
+    case Shapes.SINETUBE: {
+      sinetubeMenu.show();
+      sinetubeMenu.open();
       break;
     }
   }

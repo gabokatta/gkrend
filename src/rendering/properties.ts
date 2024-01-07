@@ -24,10 +24,10 @@ export const TEXTURES = new Map<Textures, string>([
 ]);
 
 export enum Shapes {
-  CONE = "cone",
   CYLINDER = "cylinder",
   SPHERE = "sphere",
-  CUBE = "cube",
+  PLANE = "plane",
+  SINETUBE = "sinetube",
 }
 
 export var props = {
@@ -45,7 +45,7 @@ export var props = {
   scalespeed: DEFAULT_VELOCITY,
 
   sphere: { radius: 4 },
-  cone: { radius: 5, height: 7 },
   cylinder: { radius: 4, height: 7 },
-  cube: { width: 5, height: 5, depth: 5 },
+  plane: { width: 5, height: 5 },
+  sinetube: { radius: 4, length: 3, amplitude: 2, height: 3 },
 };
