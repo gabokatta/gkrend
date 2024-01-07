@@ -19,6 +19,12 @@ export class Orbital implements Camera {
   mouseMoveListener: any;
   isMouseDown: boolean = false;
 
+  touchStartListener: any;
+  touchMoveListener: any;
+  touchEndListener: any;
+  isFingerDown: boolean = false;
+  touchStartPosition: { x: number; y: number } = { x: 0, y: 0 };
+
   constructor(gl: WebGL, center: vec3 = [0, 0, 0], offset: vec3 = [0, 0, 10]) {
     this.center = center;
     this.offset = offset;
@@ -51,6 +57,34 @@ export class Orbital implements Camera {
         this.state.du = linearInterpolation(this.state.du, movementX, amount);
         this.state.dv = linearInterpolation(this.state.dv, movementY, amount);
       }
+    });
+
+    this.touchStartListener = gl.canvas.addEventListener("touchstart", (e) => {
+      if (e.touches.length === 1) {
+        this.isFingerDown = true;
+        this.touchStartPosition.x = e.touches[0].clientX;
+        this.touchStartPosition.y = e.touches[0].clientY;
+      }
+    });
+
+    this.touchMoveListener = gl.canvas.addEventListener("touchmove", (e) => {
+      if (this.isFingerDown && e.touches.length === 1) {
+        const movementX = e.touches[0].clientX - this.touchStartPosition.x;
+        const movementY = e.touches[0].clientY - this.touchStartPosition.y;
+
+        const amount = 0.1;
+        this.state.du = linearInterpolation(this.state.du, movementX, amount);
+        this.state.dv = linearInterpolation(this.state.dv, movementY, amount);
+
+        this.touchStartPosition.x = e.touches[0].clientX;
+        this.touchStartPosition.y = e.touches[0].clientY;
+      }
+    });
+
+    this.touchEndListener = gl.canvas.addEventListener("touchend", (_e) => {
+      this.isFingerDown = false;
+      this.state.du = 0;
+      this.state.dv = 0;
     });
   }
 
@@ -91,6 +125,9 @@ export class Orbital implements Camera {
     document.removeEventListener("mousemove", this.mouseMoveListener);
     document.removeEventListener("mousedown", this.mouseDownListener);
     document.removeEventListener("mouseup", this.mouseUpListener);
+    document.removeEventListener("touchstart", this.touchStartListener);
+    document.removeEventListener("touchmove", this.touchMoveListener);
+    document.removeEventListener("touchend", this.touchEndListener);
   }
 }
 
