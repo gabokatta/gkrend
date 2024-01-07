@@ -27,7 +27,7 @@ export enum Shapes {
   CYLINDER = "cylinder",
   SPHERE = "sphere",
   PLANE = "plane",
-  SINETUBE = "sinetube",
+  TORUS = "torus",
 }
 
 export var props = {
@@ -47,5 +47,5 @@ export var props = {
   sphere: { radius: 4 },
   cylinder: { radius: 4, height: 7 },
   plane: { width: 5, height: 5 },
-  sinetube: { radius: 4, length: 3, amplitude: 2, height: 3 },
+  torus: { ring: 4, tube: 3 },
 };

@@ -16,8 +16,8 @@ colorFolder.addColor(props, "shapeColor").onChange(() => scene.updateColor(props
 var sphereMenu = buildSphereMenu(gui);
 var planeMenu = buildPlaneMenu(gui);
 var cylinderMenu = buildCylinderMenu(gui);
-var sinetubeMenu = buildSineTubeMenu(gui);
-var sizeChildren = [sinetubeMenu, planeMenu, sphereMenu, cylinderMenu];
+var torusMenu = buildTorusMenu(gui);
+var sizeChildren = [torusMenu, planeMenu, sphereMenu, cylinderMenu];
 
 export var animationFolder: GUI = gui.addFolder("Animation");
 animationFolder.add(props, "rotaxis", ["X", "Y", "Z"]).onChange((value: string) => {
@@ -75,18 +75,12 @@ function buildCylinderMenu(gui: GUI): GUI {
   return cylinderMenu;
 }
 
-function buildSineTubeMenu(gui: GUI): GUI {
-  var sineTubeMenu = gui.addFolder("Sine Tube");
-  var sineTube = props.sinetube;
-  sineTubeMenu
-    .add(sineTube, "radius", MIN_SIZE_VALUE, sineTube.radius, SLIDER_STEP)
-    .setValue(sineTube.radius / INITIAL_VALUE_DIVISOR);
-  sineTubeMenu.add(sineTube, "length", 0.1, sineTube.length, 0.1).setValue(sineTube.length / INITIAL_VALUE_DIVISOR);
-  sineTubeMenu
-    .add(sineTube, "height", MIN_SIZE_VALUE, sineTube.height, 0.1)
-    .setValue(sineTube.height / INITIAL_VALUE_DIVISOR);
-  sineTubeMenu.add(sineTube, "amplitude", 0.1, sineTube.amplitude, 0.1).setValue(0.5);
-  return sineTubeMenu;
+function buildTorusMenu(gui: GUI): GUI {
+  var torusMenu = gui.addFolder("Torus");
+  var torus = props.torus;
+  torusMenu.add(torus, "tube", 0.1, torus.tube, SLIDER_STEP / 10).setValue(1);
+  torusMenu.add(torus, "ring", MIN_SIZE_VALUE, torus.ring, SLIDER_STEP / 10).setValue(2.5);
+  return torusMenu;
 }
 
 function buildPlaneMenu(gui: GUI): GUI {
@@ -123,9 +117,9 @@ function renderShapeMenu(e: Event) {
       planeMenu.open();
       break;
     }
-    case Shapes.SINETUBE: {
-      sinetubeMenu.show();
-      sinetubeMenu.open();
+    case Shapes.TORUS: {
+      torusMenu.show();
+      torusMenu.open();
       break;
     }
   }

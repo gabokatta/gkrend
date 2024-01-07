@@ -4,8 +4,8 @@ import { Geometry } from "../engine/geometry";
 import { Object3D, Transformation } from "../engine/object";
 import { Cylinder } from "../engine/shapes/cylinder";
 import { Plane } from "../engine/shapes/plane";
-import { SineTube } from "../engine/shapes/sinetube";
 import { Sphere } from "../engine/shapes/sphere";
+import { Torus } from "../engine/shapes/torus";
 import { WebGL } from "../engine/webgl";
 import { scene } from "../main";
 import { applyAnimations, toRads } from "./animation";
@@ -23,7 +23,7 @@ export class Scene {
     this.gl = new WebGL(canvas);
     this.object = new Object3D(
       currentGeometry(props.shape),
-      [Transformation.rotation(toRads(60), [1, -1, 0])],
+      [Transformation.rotation(toRads(60), [-1, -1, 0])],
       props.shapeColor.map((value) => value / 255)
     );
     this.camera = new Orbital(this.gl);
@@ -102,13 +102,8 @@ function currentGeometry(shape: Shapes): Geometry {
     case Shapes.PLANE: {
       return new Plane(props.plane.width, props.plane.height);
     }
-    case Shapes.SINETUBE: {
-      return new SineTube(
-        props.sinetube.radius,
-        props.sinetube.length,
-        props.sinetube.amplitude,
-        props.sinetube.height
-      );
+    case Shapes.TORUS: {
+      return new Torus(props.torus.tube, props.torus.ring);
     }
   }
 }
