@@ -18,10 +18,11 @@
     --header-ul-gap: calc(100vw / 20);
     --canvas-w: 95%;
     --canvas-h: 50vh;
+    --bg-color: #cfcbcb
 }
 
 body {
-    background: #cfcbcb;
+    background: var(--bg-color);
 }
 
 header {
@@ -70,7 +71,7 @@ main nav ul {
     justify-self: center;
     width: var(--canvas-w);
     height: var(--canvas-h);
-    background-color: azure;
+    background-color: var(--bg-color);
 }
 
 footer {
