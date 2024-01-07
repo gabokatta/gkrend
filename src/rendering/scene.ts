@@ -90,9 +90,9 @@ shapeButtons.forEach((btn) => {
 });
 
 const NEXT_TEXTURE = new Map<Textures, Textures>([
-  [Textures.NONE, Textures.GRASS],
-  [Textures.GRASS, Textures.LAVA],
-  [Textures.LAVA, Textures.WATER],
+  [Textures.NONE, Textures.LAVA],
+  [Textures.LAVA, Textures.GRASS],
+  [Textures.GRASS, Textures.WATER],
   [Textures.WATER, Textures.NONE],
 ]);
 
