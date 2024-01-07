@@ -332,19 +332,27 @@ varying vec3 vBinormal;
 varying vec2 vUV;
 
 void main(void) {
+  vec3 color;
 
-  vec3 normalColor = vec3(0.5, 0.5, 0.5) + 0.5 * vNormal;
-  float lightIntensity = 0.6 + 0.15*vNormal.y + 0.05 * vNormal.z + 0.05 * vNormal.x; 
+  if (useTexture) {
+    vec4 textureColor = texture2D(texture, vUV);
+    vec3 lightDirection = normalize(vec3(1.0, 1.0, 1.0));
+    float diffuse = max(0.0, dot(vNormal, lightDirection));
+    float ambient = 0.3;
+    float lightIntensity = ambient + diffuse;
+    textureColor.rgb *= lightIntensity;
+    color = textureColor.rgb;
+  } else if (normalColoring) {
+    color = vec3(0.5, 0.5, 0.5) + 0.5 * vNormal;
+  } else {
+    vec3 lightDirection = normalize(vec3(1.0, 1.0, 1.0));
+    float diffuse = max(0.0, dot(vNormal, lightDirection));
+    float ambient = 0.3;
+    float lightIntensity = ambient + diffuse;
+    color = modelColor * lightIntensity;
+  }
 
-  if (useTexture) {     
-    vec4 textureColor=texture2D(texture, vUV); 
-    gl_FragColor = vec4(textureColor.xyz,1.0);
-  }
-  else if ( normalColoring ) {
-    gl_FragColor = vec4(normalColor, 1.0);
-  } 
-  else {
-    gl_FragColor = vec4(modelColor*lightIntensity, 1.0);
-  }
+  gl_FragColor = vec4(color, 1.0);
 }
+
 `;

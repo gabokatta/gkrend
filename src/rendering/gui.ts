@@ -4,7 +4,7 @@ import { ANIMATION, Rotate, changeAnimationStatus, setAnimationVelocity } from "
 import { scene } from "../main";
 
 const MIN_SIZE_VALUE = 1;
-const SLIDER_STEP = 1;
+const SLIDER_STEP = 0.1;
 const INITIAL_VALUE_DIVISOR = 2;
 
 var gui = new GUI({ autoPlace: false, width: 225 });
@@ -78,8 +78,8 @@ function buildCylinderMenu(gui: GUI): GUI {
 function buildTorusMenu(gui: GUI): GUI {
   var torusMenu = gui.addFolder("Torus");
   var torus = props.torus;
-  torusMenu.add(torus, "tube", 0.1, torus.tube, SLIDER_STEP / 10).setValue(1);
-  torusMenu.add(torus, "ring", MIN_SIZE_VALUE, torus.ring, SLIDER_STEP / 10).setValue(2.5);
+  torusMenu.add(torus, "tube", 0.1, torus.tube, SLIDER_STEP).setValue(1);
+  torusMenu.add(torus, "ring", MIN_SIZE_VALUE, torus.ring, SLIDER_STEP).setValue(2.5);
   return torusMenu;
 }
 
