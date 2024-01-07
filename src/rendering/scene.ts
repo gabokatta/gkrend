@@ -14,7 +14,6 @@ export class Scene {
   gl: WebGL;
   t: number = 0;
   object: Object3D;
-  textureInit: boolean = false;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -100,10 +99,9 @@ const textureButton = document.getElementById("texture")!;
 textureButton.addEventListener("click", toggleTextures);
 
 async function toggleTextures() {
-  if (!scene.textureInit) {
-    await scene.gl.initTextures(Array.from(TEXTURES.values()));
-    scene.textureInit = true;
-  }
   props.texture = NEXT_TEXTURE.get(props.texture)!;
+  if (!scene.gl.loadedTextures.has(TEXTURES.get(props.texture)!)) {
+    await scene.gl.initTextures([TEXTURES.get(props.texture)!]);
+  }
   scene.updateTexture(props.texture);
 }
