@@ -35,6 +35,19 @@ export enum Shapes {
   TORUS = "torus",
 }
 
+export const NEXT_TEXTURE = new Map<Textures, Textures>([
+  [Textures.NONE, Textures.LAVA],
+  [Textures.LAVA, Textures.GRASS],
+  [Textures.GRASS, Textures.WATER],
+  [Textures.WATER, Textures.NONE],
+]);
+
+export const NEXT_RENDER = new Map<Render, Render>([
+  [Render.SMOOTH, Render.NORMAL],
+  [Render.NORMAL, Render.WIREFRAME],
+  [Render.WIREFRAME, Render.SMOOTH],
+]);
+
 var ANIMATIONS: Map<ANIMATION, ApplicableAnimation> = new Map<ANIMATION, ApplicableAnimation>([
   [ANIMATION.RESIZE, new ApplicableAnimation(new Resize(), false, DEFAULT_VELOCITY)],
   [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), true, DEFAULT_VELOCITY)],

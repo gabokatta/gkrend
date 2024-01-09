@@ -126,6 +126,7 @@ footer nav ul {
         align-items: center;
         justify-content: space-between;
     }
+    
 
     main nav {  
         height: var(--canvas-h);

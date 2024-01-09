@@ -30,10 +30,16 @@ header {
     background-color: var(--gba-color);
 }
 
+.btn {
+    cursor: pointer;
+}
+
+
 header .logo {
     color: var(--header-logo-font-color);
     font-family: 'Gill Sans';
     font-size: var(--header-logo-font-size);
+    cursor: pointer;
 }
 
 main nav  {

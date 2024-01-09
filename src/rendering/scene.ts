@@ -4,7 +4,7 @@ import { Object3D, Transformation } from "../engine/object";
 import { WebGL } from "../engine/webgl";
 import { scene } from "../main";
 import { ANIMATION, ApplicableAnimation } from "./animation";
-import { Render, Shapes, TEXTURES, Textures, currentGeometry, props } from "./properties";
+import { NEXT_RENDER, NEXT_TEXTURE, Render, Shapes, TEXTURES, Textures, currentGeometry, props } from "./properties";
 
 export class Scene {
   public canvas: HTMLCanvasElement;
@@ -98,19 +98,6 @@ export class Scene {
     this.gl.cleanGL();
   }
 }
-
-const NEXT_TEXTURE = new Map<Textures, Textures>([
-  [Textures.NONE, Textures.LAVA],
-  [Textures.LAVA, Textures.GRASS],
-  [Textures.GRASS, Textures.WATER],
-  [Textures.WATER, Textures.NONE],
-]);
-
-const NEXT_RENDER = new Map<Render, Render>([
-  [Render.SMOOTH, Render.NORMAL],
-  [Render.NORMAL, Render.WIREFRAME],
-  [Render.WIREFRAME, Render.SMOOTH],
-]);
 
 const shapeButtons = document.querySelectorAll(".shape-btn");
 shapeButtons.forEach((btn) => {
