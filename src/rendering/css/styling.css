@@ -1,9 +1,11 @@
 
 :root {
     --header-logo-font-color: black;
-    --header-logo-font-size: large;
-    --bg-color: #cfcbcb;
-    --gba-color-light: #454ba1;
+    --header-logo-font-size: x-large;
+    --bg-color: rgba(196,190,187, 1);
+    --gba-color: rgba(73,71,134,1);
+    --main-nav-border-radius: 6px;
+    --main-nav-padding: 10px;
 }
 
 @font-face {
@@ -25,7 +27,7 @@ body {
 }
 
 header {
-    background-color: var(--gba-color-light);
+    background-color: var(--gba-color);
 }
 
 header .logo {
@@ -34,14 +36,36 @@ header .logo {
     font-size: var(--header-logo-font-size);
 }
 
+main nav  {
+    border-radius: var(--main-nav-border-radius);
+    background-color: var(--gba-color);
+    padding-top: var(--main-nav-padding);
+    padding-bottom: var(--main-nav-padding);
+}
+
+
 footer {
-    background-color: var(--gba-color-light);
+    background-color: var(--gba-color);
 }
 
 @media only screen and (min-width: 1000px) {
 
     :root {
         --header-logo-font-size: xx-large;
+        --main-nav-border-radius: 75px;
+    }
+
+    main nav  {
+        background-color: var(--gba-color);
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        border-top-right-radius: var(--main-nav-border-radius);
+        border-bottom-right-radius: var(--main-nav-border-radius);
+    }
+
+    .shape-btn {
+        background-color: transparent;
+        border-radius: 0px;
     }
 
     header .logo {

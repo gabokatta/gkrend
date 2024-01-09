@@ -58,6 +58,7 @@ main nav ul {
     list-style: none;
     display: flex;
     padding: 0;
+    align-items: center;
     gap: var(--main-ul-gap) ;
 }
 
@@ -92,12 +93,13 @@ footer nav ul {
 
     :root {
         --footer-h: 20px;
-        --main-ul-gap: calc(100vw / 25);
         --canvas-w: 65%;
         --canvas-h: 60vh;
         --header-logo-margin: 0 0 0 150px;
         --header-ul-padding: 0 100px 0 0;
         --header-logo-font-size: xx-large;
+        --main-ul-gap: calc(var(--canvas-h)/5);
+        --main-nav-padding: 20px
     }
 
 
@@ -125,9 +127,16 @@ footer nav ul {
         justify-content: space-between;
     }
 
+    main nav {  
+        height: var(--canvas-h);
+        display: grid;
+        padding-left: var(--main-nav-padding);
+    }
+
     main nav ul {
+        align-self: center;
+        padding-right: calc(var(--main-nav-padding) - 5px);
         flex-direction: column;
-        padding-left: 50px;
         gap: var(--main-ul-gap);
     }
 
