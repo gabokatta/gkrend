@@ -49,9 +49,13 @@ header .logo {
     cursor: pointer;
 }
 
+#canvas {
+    background-color: var(--bg-color);
+}
+
 main nav  {
-    border-radius: var(--main-nav-border-radius);
     background-color: var(--gba-color);
+    border-radius: var(--main-nav-border-radius);
     padding-top: var(--main-nav-padding);
     padding-bottom: var(--main-nav-padding);
 }
@@ -69,14 +73,9 @@ footer {
         --main-nav-margin: 35px;
     }
 
-    .gui-container {
-        padding-right: var(--main-nav-margin);
-    }
-
     main nav  {
         background-color: var(--gba-color);
         border-radius: var(--main-nav-border-radius);
-        margin-left: var(--main-nav-margin);
     }
 
     .shape-btn {

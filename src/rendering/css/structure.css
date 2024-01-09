@@ -66,7 +66,6 @@ main nav ul {
     justify-self: center;
     width: var(--canvas-w);
     height: var(--canvas-h);
-    background-color: var(--bg-color);
 }
 
 footer {
@@ -124,19 +123,18 @@ footer nav ul {
         min-height: var(--main-h);
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
     
 
     main nav {  
         height: var(--canvas-h);
         display: grid;
-        padding-left: var(--main-nav-padding);
     }
 
     main nav ul {
         align-self: center;
-        padding-right: calc(var(--main-nav-padding) - 5px);
+        padding-right: calc(var(--main-nav-padding) - 10px);
         flex-direction: column;
         gap: var(--main-ul-gap);
     }

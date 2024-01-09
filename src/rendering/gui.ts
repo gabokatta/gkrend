@@ -8,7 +8,7 @@ const SLIDER_STEP = 0.1;
 const INITIAL_VALUE_DIVISOR = 2;
 const SCENE_ANIMATIONS = scene.animations;
 
-var gui = new GUI({ autoPlace: false, width: 225 });
+var gui = new GUI({ autoPlace: false, width: 200 });
 document.querySelector(".gui-container")?.append(gui.domElement);
 
 var colorFolder: GUI = gui.addFolder("Color");
