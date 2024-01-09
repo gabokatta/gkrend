@@ -56,7 +56,6 @@ export class Resize implements Animation {
 
     scaleFactor = this.flip ? mod(t) : modFactor - mod(t);
 
-    console.log([this.flip, t, scaleFactor]);
     return Transformation.scale([scaleFactor, scaleFactor, scaleFactor]);
   }
 }
