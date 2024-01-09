@@ -1,15 +1,10 @@
 import { Camera } from "../engine/cameras/camera";
 import { Orbital } from "../engine/cameras/orbital";
-import { Geometry } from "../engine/geometry";
 import { Object3D, Transformation } from "../engine/object";
-import { Cylinder } from "../engine/shapes/cylinder";
-import { Plane } from "../engine/shapes/plane";
-import { Sphere } from "../engine/shapes/sphere";
-import { Torus } from "../engine/shapes/torus";
 import { WebGL } from "../engine/webgl";
 import { scene } from "../main";
-import { applyAnimations, toRads } from "./animation";
-import { Render, Shapes, TEXTURES, Textures, props } from "./properties";
+import { ANIMATION, ApplicableAnimation } from "./animation";
+import { Render, Shapes, TEXTURES, Textures, currentGeometry, props } from "./properties";
 
 export class Scene {
   public canvas: HTMLCanvasElement;
@@ -17,6 +12,7 @@ export class Scene {
   t: number = 0;
   object: Object3D;
   camera: Camera;
+  animations: Map<ANIMATION, ApplicableAnimation> = props.animations;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -43,7 +39,7 @@ export class Scene {
     this.camera.update(this.gl);
     this.t += 1 / 60;
     if (this.t >= 100) this.t = 0;
-    applyAnimations(props.animations, this.object, this.t);
+    this.applyAnimations(this.object, this.t);
   }
 
   updateObject() {
@@ -87,27 +83,33 @@ export class Scene {
     }
   }
 
+  applyAnimations(object: Object3D, tick: number) {
+    let frames: Transformation[] = [];
+    this.animations.forEach((applicable, _type) => {
+      if (applicable.enabled) {
+        frames.push(applicable.animation.getTransformationFrame(tick * applicable.velocity));
+      }
+    });
+    object.updateTransform(frames);
+  }
+
   clean() {
     this.gl.cleanGL();
   }
 }
 
-function currentGeometry(shape: Shapes): Geometry {
-  switch (shape) {
-    case Shapes.SPHERE: {
-      return new Sphere(props.sphere.radius);
-    }
-    case Shapes.CYLINDER: {
-      return new Cylinder(props.cylinder.radius, props.cylinder.height);
-    }
-    case Shapes.PLANE: {
-      return new Plane(props.plane.width, props.plane.height);
-    }
-    case Shapes.TORUS: {
-      return new Torus(props.torus.tube, props.torus.ring);
-    }
-  }
-}
+const NEXT_TEXTURE = new Map<Textures, Textures>([
+  [Textures.NONE, Textures.LAVA],
+  [Textures.LAVA, Textures.GRASS],
+  [Textures.GRASS, Textures.WATER],
+  [Textures.WATER, Textures.NONE],
+]);
+
+const NEXT_RENDER = new Map<Render, Render>([
+  [Render.SMOOTH, Render.NORMAL],
+  [Render.NORMAL, Render.WIREFRAME],
+  [Render.WIREFRAME, Render.SMOOTH],
+]);
 
 const shapeButtons = document.querySelectorAll(".shape-btn");
 shapeButtons.forEach((btn) => {
@@ -118,15 +120,11 @@ shapeButtons.forEach((btn) => {
   });
 });
 
-const NEXT_TEXTURE = new Map<Textures, Textures>([
-  [Textures.NONE, Textures.LAVA],
-  [Textures.LAVA, Textures.GRASS],
-  [Textures.GRASS, Textures.WATER],
-  [Textures.WATER, Textures.NONE],
-]);
-
 const textureButton = document.getElementById("texture")!;
 textureButton.addEventListener("click", toggleTextures);
+
+const renderButton = document.getElementById("render")!;
+renderButton.addEventListener("click", toggleRender);
 
 async function toggleTextures() {
   resetRender(scene);
@@ -138,15 +136,6 @@ function resetTexture(scene: Scene) {
   scene.updateTexture(Textures.NONE);
 }
 
-const NEXT_RENDER = new Map<Render, Render>([
-  [Render.SMOOTH, Render.NORMAL],
-  [Render.NORMAL, Render.WIREFRAME],
-  [Render.WIREFRAME, Render.SMOOTH],
-]);
-
-const renderButton = document.getElementById("render")!;
-renderButton.addEventListener("click", toggleRender);
-
 async function toggleRender() {
   resetTexture(scene);
   props.render = NEXT_RENDER.get(props.render)!;
@@ -157,4 +146,8 @@ function resetRender(scene: Scene) {
   scene.gl.setShowSurfaces(true);
   scene.gl.setShowLines(false);
   scene.gl.setNormalColoring(false);
+}
+
+export function toRads(degrees: number) {
+  return degrees * (Math.PI / 180);
 }

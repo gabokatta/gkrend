@@ -1,6 +1,10 @@
-import { Object3D, Transformation } from "../engine/object";
+import { Transformation } from "../engine/object";
 
 export const DEFAULT_VELOCITY: number = 2;
+
+export interface Animation {
+  getTransformationFrame(t: number): Transformation;
+}
 
 export class ApplicableAnimation {
   public animation: Animation;
@@ -12,10 +16,14 @@ export class ApplicableAnimation {
     this.enabled = enabled;
     this.velocity = velocity;
   }
-}
 
-export interface Animation {
-  getTransformationFrame(t: number): Transformation;
+  setUsage(status: boolean) {
+    this.enabled = status;
+  }
+
+  setVelocity(amount: number) {
+    this.velocity = amount;
+  }
 }
 
 export class Rotate implements Animation {
@@ -55,37 +63,4 @@ export class Resize implements Animation {
 export enum ANIMATION {
   ROTATE,
   RESIZE,
-}
-
-export var ANIMATIONS: Map<ANIMATION, ApplicableAnimation> = new Map<ANIMATION, ApplicableAnimation>([
-  [ANIMATION.RESIZE, new ApplicableAnimation(new Resize(), false, DEFAULT_VELOCITY)],
-  [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), false, DEFAULT_VELOCITY)],
-]);
-
-export function applyAnimations(animations: Map<ANIMATION, ApplicableAnimation>, object: Object3D, tick: number) {
-  let frames: Transformation[] = [];
-  animations.forEach((applicable, _type) => {
-    if (applicable.enabled) {
-      frames.push(applicable.animation.getTransformationFrame(tick * applicable.velocity));
-    }
-  });
-  object.updateTransform(frames);
-}
-
-export function changeAnimationStatus(
-  animations: Map<ANIMATION, ApplicableAnimation>,
-  type: ANIMATION,
-  status: boolean
-) {
-  if (animations.has(type)) {
-    animations.get(type)!.enabled = status;
-  }
-}
-
-export function setAnimationVelocity(animations: Map<ANIMATION, ApplicableAnimation>, type: ANIMATION, value: number) {
-  animations.get(type)!.velocity = value;
-}
-
-export function toRads(degrees: number) {
-  return degrees * (Math.PI / 180);
 }

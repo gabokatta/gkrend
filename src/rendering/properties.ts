@@ -1,8 +1,13 @@
-import { ANIMATIONS, DEFAULT_VELOCITY } from "./animation";
+import { ANIMATION, ApplicableAnimation, DEFAULT_VELOCITY, Resize, Rotate } from "./animation";
 
 import grass from "../engine/textures/grass.png";
 import lava from "../engine/textures/lava.png";
 import water from "../engine/textures/water.png";
+import { Geometry } from "../engine/geometry";
+import { Cylinder } from "../engine/shapes/cylinder";
+import { Plane } from "../engine/shapes/plane";
+import { Sphere } from "../engine/shapes/sphere";
+import { Torus } from "../engine/shapes/torus";
 
 export enum Textures {
   NONE,
@@ -30,6 +35,11 @@ export enum Shapes {
   TORUS = "torus",
 }
 
+var ANIMATIONS: Map<ANIMATION, ApplicableAnimation> = new Map<ANIMATION, ApplicableAnimation>([
+  [ANIMATION.RESIZE, new ApplicableAnimation(new Resize(), false, DEFAULT_VELOCITY)],
+  [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), false, DEFAULT_VELOCITY)],
+]);
+
 export var props = {
   shape: Shapes.TORUS,
   texture: Textures.NONE,
@@ -49,3 +59,20 @@ export var props = {
   plane: { width: 5, height: 5 },
   torus: { ring: 4, tube: 3 },
 };
+
+export function currentGeometry(shape: Shapes): Geometry {
+  switch (shape) {
+    case Shapes.SPHERE: {
+      return new Sphere(props.sphere.radius);
+    }
+    case Shapes.CYLINDER: {
+      return new Cylinder(props.cylinder.radius, props.cylinder.height);
+    }
+    case Shapes.PLANE: {
+      return new Plane(props.plane.width, props.plane.height);
+    }
+    case Shapes.TORUS: {
+      return new Torus(props.torus.tube, props.torus.ring);
+    }
+  }
+}

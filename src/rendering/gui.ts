@@ -1,11 +1,12 @@
 import { GUI } from "dat.gui";
 import { Shapes, props } from "./properties";
-import { ANIMATION, Rotate, changeAnimationStatus, setAnimationVelocity } from "./animation";
+import { ANIMATION, Rotate } from "./animation";
 import { scene } from "../main";
 
 const MIN_SIZE_VALUE = 1;
 const SLIDER_STEP = 0.1;
 const INITIAL_VALUE_DIVISOR = 2;
+const SCENE_ANIMATIONS = scene.animations;
 
 var gui = new GUI({ autoPlace: false, width: 225 });
 document.querySelector(".gui-container")?.append(gui.domElement);
@@ -21,36 +22,36 @@ var sizeChildren = [torusMenu, planeMenu, sphereMenu, cylinderMenu];
 
 export var animationFolder: GUI = gui.addFolder("Animation");
 animationFolder.add(props, "rotaxis", ["X", "Y", "Z"]).onChange((value: string) => {
-  var rotateAnimation = <Rotate>props.animations.get(ANIMATION.ROTATE)!.animation;
+  var rotateAnimation = <Rotate>SCENE_ANIMATIONS.get(ANIMATION.ROTATE)!.animation;
   rotateAnimation.axis = Rotate.AXIS.get(value)!;
 });
 animationFolder
   .add(props, "rotspeed", 1, 3, 1)
   .step(1)
   .onChange((value) => {
-    setAnimationVelocity(props.animations, ANIMATION.ROTATE, value);
+    SCENE_ANIMATIONS.get(ANIMATION.ROTATE)?.setVelocity(value);
   });
 animationFolder
   .add(props, "scalespeed", 1, 3)
   .step(1)
   .onChange((value) => {
-    setAnimationVelocity(props.animations, ANIMATION.RESIZE, value);
+    SCENE_ANIMATIONS.get(ANIMATION.RESIZE)?.setVelocity(value);
   });
 animationFolder.add(props, "rotate").onChange((value) => {
   props.rotate = value;
-  changeAnimationStatus(props.animations, ANIMATION.ROTATE, value);
+  SCENE_ANIMATIONS.get(ANIMATION.ROTATE)?.setUsage(value);
 });
 animationFolder.add(props, "scale").onChange((value) => {
   props.scale = value;
-  changeAnimationStatus(props.animations, ANIMATION.RESIZE, value);
+  SCENE_ANIMATIONS.get(ANIMATION.RESIZE)?.setUsage(value);
 });
 
 // Set Initial GUI State.
 hideFolders(sizeChildren);
 animationFolder.open();
 colorFolder.open();
-sphereMenu.show();
-sphereMenu.open();
+torusMenu.show();
+torusMenu.open();
 
 // --------------------------
 
