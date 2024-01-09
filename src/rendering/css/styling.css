@@ -1,0 +1,50 @@
+
+:root {
+    --header-logo-font-color: black;
+    --header-logo-font-size: large;
+    --bg-color: #cfcbcb;
+    --gba-color-light: #454ba1;
+}
+
+@font-face {
+    font-family: 'Gill Sans';
+    src: url('GillSans-BoldItalic.eot');
+    src: local('Gill Sans Bold Italic'), local('GillSans-BoldItalic'),
+        url('GillSans-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('GillSans-BoldItalic.woff2') format('woff2'),
+        url('GillSans-BoldItalic.woff') format('woff'),
+        url('GillSans-BoldItalic.ttf') format('truetype'),
+        url('GillSans-BoldItalic.svg#GillSans-BoldItalic') format('svg');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+body {
+    background: var(--bg-color);
+}
+
+header {
+    background-color: var(--gba-color-light);
+}
+
+header .logo {
+    color: var(--header-logo-font-color);
+    font-family: 'Gill Sans';
+    font-size: var(--header-logo-font-size);
+}
+
+footer {
+    background-color: var(--gba-color-light);
+}
+
+@media only screen and (min-width: 1000px) {
+
+    :root {
+        --header-logo-font-size: xx-large;
+    }
+
+    header .logo {
+        font-size: var(--header-logo-font-size);
+    }
+}
