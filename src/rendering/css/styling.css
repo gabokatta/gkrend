@@ -43,6 +43,8 @@ header .logo {
 
 header .logo {
     font-family: 'Gill Sans';
+    font-weight: bold;
+    font-style: italic;
     font-size: var(--header-logo-font-size);
     cursor: pointer;
 }
