@@ -52,15 +52,18 @@ footer {
 
     :root {
         --header-logo-font-size: xx-large;
-        --main-nav-border-radius: 75px;
+        --main-nav-border-radius: 25px;
+        --main-nav-margin: 35px;
+    }
+
+    .gui-container {
+        padding-right: var(--main-nav-margin);
     }
 
     main nav  {
         background-color: var(--gba-color);
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-        border-top-right-radius: var(--main-nav-border-radius);
-        border-bottom-right-radius: var(--main-nav-border-radius);
+        border-radius: var(--main-nav-border-radius);
+        margin-left: var(--main-nav-margin);
     }
 
     .shape-btn {
