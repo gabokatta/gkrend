@@ -1,5 +1,5 @@
 import { Scene } from "./rendering/scene";
-import { initSound } from "./rendering/sound/sound";
+import { initSound } from "./rendering/miscellaneous";
 
 const canvas = <HTMLCanvasElement>document.getElementById("canvas")!;
 export const scene = new Scene(canvas);

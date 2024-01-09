@@ -30,13 +30,18 @@ header {
     background-color: var(--gba-color);
 }
 
+header .logo {
+    display: flex;
+    flex-direction: row;
+    margin-left: -8px;
+}
+
 .btn {
     cursor: pointer;
 }
 
 
 header .logo {
-    color: var(--header-logo-font-color);
     font-family: 'Gill Sans';
     font-size: var(--header-logo-font-size);
     cursor: pointer;
@@ -81,3 +86,28 @@ footer {
         font-size: var(--header-logo-font-size);
     }
 }
+
+/* ANIMATION  :D -- Credit: https://lenadesign.org/2021/05/18/css-bouncing-text-animation/ 
+   I can tell this must be fun to actually tinker around with, it was cool to learn about
+   the stuff you can do with this.
+*/
+
+@keyframes bounce {
+    0%   { transform: scale(1,1) translateY(0); }
+    10%  { transform: scale(1.1,.9) translateY(0); }
+    30%  { transform: scale(.9,1.1)   translateY(-15px);}
+    50%  { transform: scale(1.05,.95) translateY(0); }
+    58%  { transform: scale(1,1) translateY(-1px); }
+    65%  { transform: scale(1,1) translateY(0);}
+    100% { transform: scale(1,1) translateY(0);}
+}
+
+.letter {
+    color: var(--bg-color);
+    text-shadow: 0 3px var(--header-logo-font-color), 0 5px var(--header-logo-font-color), 0 5px var(--header-logo-font-color);
+}
+
+.letter-animated {
+    animation: bounce 4s ease forwards calc(.1s * var(--i));
+}
+
