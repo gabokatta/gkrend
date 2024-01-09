@@ -31,6 +31,7 @@ export function initSound() {
   buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       if (audioEnabled) {
+        buttonAudio!.currentTime = 0;
         buttonAudio!.play();
       }
     });
