@@ -111,3 +111,44 @@ footer {
     animation: bounce 4s ease forwards calc(.1s * var(--i));
 }
 
+/*DAT-GUI Theme Override*/
+
+.gui-container .dg.main .close-button {
+    background-color: var(--gba-color);
+    color: var(--bg-color);
+}
+
+.gui-container .dg {
+    color: white;
+    font-family: 'Gill Sans';
+    font-weight: bold;
+    font-style: italic;
+    font-size: xx-small;
+    text-transform: uppercase;
+}
+
+.gui-container .dg .property-name{
+    
+    color: var(--bg-color);
+    font-family: 'Gill Sans';
+    font-size: xx-small;
+    text-transform: uppercase;
+}
+
+.gui-container .dg li.title {
+    color: var(--bg-color);
+    background: var(--gba-color) url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) 6px 10px no-repeat;
+}
+
+.gui-container .dg .slider .slider-fg {
+    background-color: var(--bg-color);
+}
+
+.gui-container .dg .c .slider:hover .slider-fg {
+    background-color: var(--bg-color);
+}
+
+
+.gui-container .dg .cr.number input[type=text] {
+    color: var(--bg-color);
+}
