@@ -1,6 +1,6 @@
 import { Transformation } from "../engine/object";
 
-export const DEFAULT_VELOCITY: number = 2;
+export const DEFAULT_VELOCITY: number = 1.25;
 
 export interface Animation {
   getTransformationFrame(t: number): Transformation;

@@ -28,6 +28,7 @@ export class Scene {
   async initScene() {
     await this.gl.init();
     this.object.geometry = currentGeometry(props.shape);
+    this.updateRender(props.render);
     const texturesPromise = this.gl.initTextures(Array.from(TEXTURES.values()));
     this.tick();
     await texturesPromise;

@@ -26,14 +26,14 @@ animationFolder.add(props, "rotaxis", ["X", "Y", "Z"]).onChange((value: string) 
   rotateAnimation.axis = Rotate.AXIS.get(value)!;
 });
 animationFolder
-  .add(props, "rotspeed", 1, 3, 1)
-  .step(1)
+  .add(props, "rotspeed", 1, 3)
+  .step(SLIDER_STEP)
   .onChange((value) => {
     SCENE_ANIMATIONS.get(ANIMATION.ROTATE)?.setVelocity(value);
   });
 animationFolder
   .add(props, "scalespeed", 1, 3)
-  .step(1)
+  .step(SLIDER_STEP)
   .onChange((value) => {
     SCENE_ANIMATIONS.get(ANIMATION.RESIZE)?.setVelocity(value);
   });

@@ -37,21 +37,21 @@ export enum Shapes {
 
 var ANIMATIONS: Map<ANIMATION, ApplicableAnimation> = new Map<ANIMATION, ApplicableAnimation>([
   [ANIMATION.RESIZE, new ApplicableAnimation(new Resize(), false, DEFAULT_VELOCITY)],
-  [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), false, DEFAULT_VELOCITY)],
+  [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), true, DEFAULT_VELOCITY)],
 ]);
 
 export var props = {
   shape: Shapes.TORUS,
   texture: Textures.NONE,
-  render: Render.SMOOTH,
+  render: Render.NORMAL,
 
   shapeColor: [100, 200, 100],
 
   animations: ANIMATIONS,
-  rotate: false,
+  rotate: ANIMATIONS.get(ANIMATION.ROTATE)?.enabled,
   rotspeed: DEFAULT_VELOCITY,
   rotaxis: "X",
-  scale: false,
+  scale: ANIMATIONS.get(ANIMATION.RESIZE)?.enabled,
   scalespeed: DEFAULT_VELOCITY,
 
   sphere: { radius: 4 },

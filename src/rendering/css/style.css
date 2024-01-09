@@ -13,12 +13,27 @@
     --footer-ul-gap: calc(100vw / 5) ;
     --header-w: 100%;
     --header-h: 100px;
-    --header-logo-margin: 0 0 0 50px;
+    --header-logo-margin: 0 0 0 30px;
+    --header-logo-font-size: large;
     --header-ul-padding: 0 30px 0 0;
     --header-ul-gap: calc(100vw / 20);
     --canvas-w: 95%;
     --canvas-h: 50vh;
     --bg-color: #cfcbcb
+}
+
+@font-face {
+    font-family: 'Gill Sans';
+    src: url('GillSans-BoldItalic.eot');
+    src: local('Gill Sans Bold Italic'), local('GillSans-BoldItalic'),
+        url('GillSans-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('GillSans-BoldItalic.woff2') format('woff2'),
+        url('GillSans-BoldItalic.woff') format('woff'),
+        url('GillSans-BoldItalic.ttf') format('truetype'),
+        url('GillSans-BoldItalic.svg#GillSans-BoldItalic') format('svg');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
 }
 
 body {
@@ -31,11 +46,14 @@ header {
     background-color: aliceblue;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
+
 
 header .logo {
     color: black;
+    font-family: 'Gill Sans';
+    font-size: var(--header-logo-font-size);
     margin: var(--header-logo-margin);
 }
 
@@ -94,6 +112,7 @@ footer nav ul {
     gap: var(--footer-ul-gap);
 }
 
+
 @media only screen and (min-width: 1000px) {
 
     :root {
@@ -103,6 +122,7 @@ footer nav ul {
         --canvas-h: 60vh;
         --header-logo-margin: 0 0 0 150px;
         --header-ul-padding: 0 100px 0 0;
+        --header-logo-font-size: xx-large;
     }
 
 
@@ -117,6 +137,7 @@ footer nav ul {
 
     header .logo {
         margin: var(--header-logo-margin);
+        font-size: var(--header-logo-font-size);
     }
 
     .gui-container {
