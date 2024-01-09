@@ -12,7 +12,10 @@ var gui = new GUI({ autoPlace: false, width: 200 });
 document.querySelector(".gui-container")?.append(gui.domElement);
 
 var colorFolder: GUI = gui.addFolder("Color");
-colorFolder.addColor(props, "shapeColor").onChange(() => scene.updateColor(props.shapeColor));
+colorFolder
+  .addColor(props, "shapeColor")
+  .onChange(() => scene.updateColor(props.shapeColor))
+  .name("Shape");
 
 var sphereMenu = buildSphereMenu(gui);
 var planeMenu = buildPlaneMenu(gui);
@@ -21,30 +24,37 @@ var torusMenu = buildTorusMenu(gui);
 var sizeChildren = [torusMenu, planeMenu, sphereMenu, cylinderMenu];
 
 export var animationFolder: GUI = gui.addFolder("Animation");
-animationFolder.add(props, "rotaxis", ["X", "Y", "Z"]).onChange((value: string) => {
-  var rotateAnimation = <Rotate>SCENE_ANIMATIONS.get(ANIMATION.ROTATE)!.animation;
-  rotateAnimation.axis = Rotate.AXIS.get(value)!;
-});
-animationFolder
-  .add(props, "rotspeed", 1, 3)
-  .step(SLIDER_STEP)
-  .onChange((value) => {
-    SCENE_ANIMATIONS.get(ANIMATION.ROTATE)?.setVelocity(value);
-  });
-animationFolder
-  .add(props, "scalespeed", 1, 3)
-  .step(SLIDER_STEP)
-  .onChange((value) => {
-    SCENE_ANIMATIONS.get(ANIMATION.RESIZE)?.setVelocity(value);
-  });
+
 animationFolder.add(props, "rotate").onChange((value) => {
   props.rotate = value;
   SCENE_ANIMATIONS.get(ANIMATION.ROTATE)?.setUsage(value);
 });
+animationFolder
+  .add(props, "rotaxis", ["X", "Y", "Z"])
+  .onChange((value: string) => {
+    var rotateAnimation = <Rotate>SCENE_ANIMATIONS.get(ANIMATION.ROTATE)!.animation;
+    rotateAnimation.axis = Rotate.AXIS.get(value)!;
+  })
+  .name("AXIS");
+animationFolder
+  .add(props, "rotspeed", 1, 5)
+  .step(SLIDER_STEP)
+  .onChange((value) => {
+    SCENE_ANIMATIONS.get(ANIMATION.ROTATE)?.setVelocity(value);
+  })
+  .name("SPEED");
+
 animationFolder.add(props, "scale").onChange((value) => {
   props.scale = value;
   SCENE_ANIMATIONS.get(ANIMATION.RESIZE)?.setUsage(value);
 });
+animationFolder
+  .add(props, "scalespeed", 1.25, 5)
+  .step(1.25)
+  .onChange((value) => {
+    SCENE_ANIMATIONS.get(ANIMATION.RESIZE)?.setVelocity(value);
+  })
+  .name("SPEED");
 
 // Set Initial GUI State.
 hideFolders(sizeChildren);

@@ -1,6 +1,6 @@
 import { Transformation } from "../engine/object";
 
-export const DEFAULT_VELOCITY: number = 1.25;
+export const DEFAULT_VELOCITY: number = 1.5;
 
 export interface Animation {
   getTransformationFrame(t: number): Transformation;
@@ -56,6 +56,7 @@ export class Resize implements Animation {
 
     scaleFactor = this.flip ? mod(t) : modFactor - mod(t);
 
+    console.log([this.flip, t, scaleFactor]);
     return Transformation.scale([scaleFactor, scaleFactor, scaleFactor]);
   }
 }
