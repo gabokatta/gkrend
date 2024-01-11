@@ -9,13 +9,13 @@ While very basic, the site allows the user to tinker with the rendered geometry 
 - Select between 4 types of geometries to render.
 - Apply textures to the geometry.
 - Change the rendering style of the engine:
-  1. Flat Coloring
-  2. Normal Coloring
-  3. Wireframe Mode
+  - Flat Coloring
+  - Normal Coloring
+  - Wireframe Mode
 - Use a simple GUI (powered by dat.gui bless up to the homies over there) to mess around with:
-  1. Geometry Color.
-  2. Geometry Size.
-  3. Apply Animations (Only 2 available because I'm Lazy)
+  - Geometry Color.
+  - Geometry Size.
+  - Apply Animations (Only 2 available because I'm Lazy)
 
 > All of those in real-time! (craaazy right?)
 
