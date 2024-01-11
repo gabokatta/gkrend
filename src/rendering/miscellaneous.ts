@@ -43,11 +43,10 @@ soundButton?.addEventListener("click", () => toggleAudio());
 /* Animations */
 
 const letters = document.querySelectorAll(".letter");
-letters.forEach((l) => {
-  l.addEventListener("click", () => {
-    letters.forEach((letter) => letter.classList.add("letter-animated"));
-  });
-  l.addEventListener("animationend", () => {
-    l.classList.remove("letter-animated");
-  });
+logoButton?.addEventListener("click", () => {
+  letters.forEach((letter) => letter.classList.add("letter-animated"));
+});
+
+logoButton?.addEventListener("animationend", () => {
+  letters.forEach((letter) => letter.classList.remove("letter-animated"));
 });
