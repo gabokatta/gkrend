@@ -16,7 +16,11 @@ Fast-forward to 2024, armed with plenty of free time and a desire to start build
 </summary>
 <p>
 
-> As a back-end developer, the thought of touching anything that had to do with the front-end made me shiver. What little experience I had with it came from those "*Become a Full-Stack Developer in 2 WEEKS!!!11!* " boot camps that I did when I started coding, and frankly, I hardly remembered anything. So I decided to use this as an excuse to properly make something I'm happy with and that looks decent. After struggling with CSS for a bit, I quickly hit the ball running and realized I *kinda* enjoyed seeing my vision for the website come to life. I added the bonus challenge on myself to make it responsive and it surprisingly worked. Also, as I move forward into other projects, relearning the fundamentals of **HTML** and **CSS** allows me to use frameworks for both of them more effectively.
+>As a back-end developer, the thought of touching anything that had to do with the front-end made me shiver. What little experience I had with it came from those "*Become a Full-Stack Developer in 2 WEEKS!!!11!* " boot camps that I did when I started coding, and frankly, I hardly remembered anything. 
+
+>So I decided to use this as an excuse to properly make something I'm happy with and that looks decent. After struggling with CSS for a bit, I quickly hit the ball running and realized I *kinda* enjoyed seeing my vision for the website come to life. I added the bonus challenge on myself to make it responsive and it surprisingly worked. 
+
+>Also, as I move forward into other projects, relearning the fundamentals of **HTML** and **CSS** allows me to use frameworks for both of them more effectively.
 
 </p>
 </details>
