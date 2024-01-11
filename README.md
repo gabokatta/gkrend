@@ -45,4 +45,4 @@ Fast-forward to 2024, armed with plenty of free time and a desire to start build
 
 ---
 
-Thanks a TON to my buddy @leonliptak, he helped me by providing his drawing skills and conjuring up some retro buttons in order to match the aesthetic that the site intended and also helping out with the overall design structure.
+Thanks a TON to my buddy [@leonliptak](https://github.com/leonliptak) for helping me with his drawing skills and conjuring up some retro buttons in order to match the aesthetic that the site intended and also helping out with the overall design structure.
