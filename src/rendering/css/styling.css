@@ -10,13 +10,13 @@
 
 @font-face {
     font-family: 'Gill Sans';
-    src: url('GillSans-BoldItalic.eot');
+    src: url('../font/GillSans-BoldItalic.eot');
     src: local('Gill Sans Bold Italic'), local('GillSans-BoldItalic'),
-        url('GillSans-BoldItalic.eot?#iefix') format('embedded-opentype'),
-        url('GillSans-BoldItalic.woff2') format('woff2'),
-        url('GillSans-BoldItalic.woff') format('woff'),
-        url('GillSans-BoldItalic.ttf') format('truetype'),
-        url('GillSans-BoldItalic.svg#GillSans-BoldItalic') format('svg');
+        url('../font/GillSans-BoldItalic.eot?#iefix') format('embedded-opentype'),
+        url('../font/GillSans-BoldItalic.woff2') format('woff2'),
+        url('../font/GillSans-BoldItalic.woff') format('woff'),
+        url('../font/GillSans-BoldItalic.ttf') format('truetype'),
+        url('../font/GillSans-BoldItalic.svg#GillSans-BoldItalic') format('svg');
     font-weight: bold;
     font-style: italic;
     font-display: swap;
