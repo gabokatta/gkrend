@@ -1,6 +1,6 @@
 # **gkrend**
 
-> **GKREND** is a simple website that serves as a demo for an extremely simple WebGL 3D Engine; also, it _ATTEMPTS_ to look like a Game Boy Advance.
+> **GKREND** is a static website that serves as a demo for an extremely simple WebGL 3D Engine; also, it _ATTEMPTS_ to look like a Game Boy Advance.
 
 ## **Features**
 
@@ -16,7 +16,9 @@ While very basic, the site allows the user to tinker with the rendered geometry 
   - Geometry Color.
   - Geometry Size.
   - Apply Animations (Only 2 available because I'm Lazy)
-
+- Orbital Camera that allows the user to "move" the object around. (Touch Screens Supported as well!)
+- Scrollwheel used to zoom in/out.
+  
 > All of those in real-time! (craaazy right?)
 
 ### **Miscellaneous**
