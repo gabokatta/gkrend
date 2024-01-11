@@ -331,25 +331,31 @@ varying vec3 vTangent;
 varying vec3 vBinormal;
 varying vec2 vUV;
 
+float random(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+
 void main(void) {
   vec3 color;
-  vec3 lightDirection = normalize(vec3(1.0, 5.0, 3.0));
-  float ambient = 0.6;
+  float normalNoiseFactor = 0.6;
+  float shadingNoiseFactor = 0.3;
+
   if (useTexture) {
     vec4 textureColor = texture2D(texture, vUV);
-    float diffuse = max(0.0, dot(vNormal, lightDirection));
-    float textlightIntensity = ambient + diffuse;
-    textureColor.rgb *= textlightIntensity;
-    color = textureColor.rgb;
+    color = textureColor.xyz;
   } else if (normalColoring) {
-    color = vec3(0.5, 0.5, 0.5) + 0.5 * vNormal;
+    vec3 noiseNormal = vNormal + normalNoiseFactor * normalize(vec3(random(vUV), random(vUV + 100.0), random(vUV + 200.0)));
+    color = 0.5 * vec3(1.0) + 0.5 * noiseNormal;
   } else {
+    vec3 lightDirection = normalize(vec3(1.0, 1.0, 1.0));
     float diffuse = max(0.0, dot(vNormal, lightDirection));
-    float colorlightIntensity = (1.5*ambient) + diffuse;
-    color = modelColor * colorlightIntensity;
+    float ambient = 0.3;
+    float lightIntensity = ambient + diffuse;
+
+    vec3 noiseShading = modelColor * lightIntensity + shadingNoiseFactor * normalize(vec3(random(vUV), random(vUV + 100.0), random(vUV + 200.0)));
+    color = noiseShading;
   }
 
   gl_FragColor = vec4(color, 1.0);
 }
-
 `;
