@@ -50,7 +50,7 @@ export const NEXT_RENDER = new Map<Render, Render>([
 
 var ANIMATIONS: Map<ANIMATION, ApplicableAnimation> = new Map<ANIMATION, ApplicableAnimation>([
   [ANIMATION.RESIZE, new ApplicableAnimation(new Resize(), false, DEFAULT_VELOCITY)],
-  [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), true, DEFAULT_VELOCITY)],
+  [ANIMATION.ROTATE, new ApplicableAnimation(new Rotate(), window.innerWidth > 1000 ? true : false, DEFAULT_VELOCITY)],
 ]);
 
 export var props = {
