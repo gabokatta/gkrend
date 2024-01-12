@@ -25,6 +25,12 @@ export class Orbital implements Camera {
   isFingerDown: boolean = false;
   touchStartPosition: { x: number; y: number } = { x: 0, y: 0 };
 
+  lastMovementDirection: vec3 = vec3.create();
+  isMomentumActive: boolean = false;
+  momentumFactor: number = 0.4;
+  momentumDamping: number = 0.95;
+  momentumThreshold: number = 0.001;
+
   constructor(gl: WebGL, center: vec3 = [0, 0, 0], offset: vec3 = [0, 0, 10]) {
     this.center = center;
     this.offset = offset;
@@ -39,8 +45,7 @@ export class Orbital implements Camera {
 
     this.mouseUpListener = document.addEventListener("mouseup", (_e) => {
       this.isMouseDown = false;
-      this.state.du = 0;
-      this.state.dv = 0;
+      this.isMomentumActive = true;
     });
 
     this.mouseWheelListener = gl.canvas.addEventListener("wheel", (e) => {
@@ -74,6 +79,8 @@ export class Orbital implements Camera {
         const movementX = e.touches[0].clientX - this.touchStartPosition.x;
         const movementY = e.touches[0].clientY - this.touchStartPosition.y;
 
+        this.lastMovementDirection = vec3.fromValues(movementX, movementY, 0);
+
         const amount = 0.1;
         this.state.du = linearInterpolation(this.state.du, movementX, amount);
         this.state.dv = linearInterpolation(this.state.dv, movementY, amount);
@@ -85,8 +92,7 @@ export class Orbital implements Camera {
 
     this.touchEndListener = gl.canvas.addEventListener("touchend", (_e) => {
       this.isFingerDown = false;
-      this.state.du = 0;
-      this.state.dv = 0;
+      this.isMomentumActive = true;
     });
   }
 
@@ -97,14 +103,23 @@ export class Orbital implements Camera {
   update(gl: WebGL): void {
     gl.setView(this.getViewMatrix());
 
-    let { du, dv } = this.state;
-    let friction = 0.01;
-    this.state.u += du * friction;
-    this.state.v += dv * friction;
+    let friction = 0.005;
+
+    if ((!this.isMouseDown || !this.isFingerDown) && this.isMomentumActive) {
+      this.isMomentumActive = false;
+
+      this.state.du += this.lastMovementDirection[0] * this.momentumFactor;
+      this.state.dv += this.lastMovementDirection[1] * this.momentumFactor;
+    }
+
+    this.state.u += this.state.du * friction;
+    this.state.v += this.state.dv * friction;
 
     if (this.state.v > 1) this.state.v = 1;
     if (this.state.v < -0.5) this.state.v = -0.5;
+
     if (this.state.z < 2) this.state.z = 2;
+    if (this.state.z > 30) this.state.z = 30;
 
     let transform = mat4.create();
     rotateMat(transform, -this.state.v, this.side);
@@ -113,9 +128,17 @@ export class Orbital implements Camera {
     let position = vec3.fromValues(0, this.state.y, this.state.z);
     vec3.transformMat4(position, position, transform);
 
-    if (position[1] < 0.1) position[1] = 0.1;
+    //if (position[1] < 0.1) position[1] = 0.1;
 
     this.position = vec3.add(vec3.create(), position, this.center);
+
+    this.state.du *= this.momentumDamping;
+    this.state.dv *= this.momentumDamping;
+
+    if (Math.abs(this.state.du) < this.momentumThreshold && Math.abs(this.state.dv) < this.momentumThreshold) {
+      this.state.du = 0;
+      this.state.dv = 0;
+    }
   }
 
   getViewMatrix(): mat4 {
