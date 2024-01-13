@@ -13,7 +13,8 @@ var logoAudio: HTMLAudioElement | undefined = undefined;
 function toggleAudio() {
   audioEnabled = !audioEnabled;
   const soundToggle = document.querySelector("#sound");
-  soundToggle!.innerHTML = audioEnabled ? "SOUND" : "NO SOUND"; //to be replaced with alternating buttons/icons
+  soundToggle?.classList.toggle("sound-on", audioEnabled);
+  soundToggle?.classList.toggle("sound-off", !audioEnabled);
 }
 
 export function initSound() {

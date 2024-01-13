@@ -82,8 +82,12 @@ footer {
     height: var(--footer-btn-size);
 }
 
-#sound {
+.sound-on {
     content: url(./svgs/sound.svg);
+}
+
+.sound-off {
+    content: url(./svgs/nosound.svg);
 }
 
 #repo {
