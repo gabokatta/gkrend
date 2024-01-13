@@ -105,7 +105,7 @@ footer nav ul {
         --header-logo-margin: 0 0 0 150px;
         --header-ul-padding: 0 100px 0 0;
         --header-logo-font-size: xx-large;
-        --main-ul-gap: calc(var(--canvas-h)/5);
+        --main-ul-gap: calc(var(--canvas-h)/10);
         --main-nav-padding: 20px;
         --main-nav-top-margin: 0px;
     }

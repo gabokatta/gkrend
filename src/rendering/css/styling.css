@@ -6,7 +6,9 @@
     --gba-color: rgba(70, 68, 141,1);
     --main-nav-border-radius: 6px;
     --main-nav-padding: 10px;
-    --lg-btn-size: 80px;
+    --footer-btn-size: 80px;
+    --header-btn-size: 55px;
+    --shape-btn-size: 60px
 }
 
 @font-face {
@@ -55,7 +57,6 @@ header .logo {
 }
 
 main nav  {
-    background-color: var(--gba-color);
     border-radius: var(--main-nav-border-radius);
     padding-top: var(--main-nav-padding);
     padding-bottom: var(--main-nav-padding);
@@ -66,16 +67,52 @@ footer {
     background-color: var(--gba-color);
 }
 
+.header-btn {
+    width: var(--header-btn-size);
+    height: var(--header-btn-size);
+}
+
+.shape-btn {
+    width: var(--shape-btn-size);
+    height: var(--shape-btn-size);
+}
+
+.footer-btn {
+    width: var(--footer-btn-size);
+    height: var(--footer-btn-size);
+}
+
+#sound {
+    content: url(./svgs/sound.svg);
+}
+
+#repo {
+    content: url(./svgs/star.svg);
+}
+
+
+#sphere {
+    content: url(./svgs/sphere.svg);
+}
+
+#cylinder {
+    content: url(./svgs/cylinder.svg);
+}
+
+#plane {
+    content: url(./svgs/plane.svg);
+}
+
+#torus {
+    content: url(./svgs/torus.svg);
+}
+
 #texture {
-    content: url(./large-button-txtr.svg);
-    width: var(--lg-btn-size);
-    height: var(--lg-btn-size);
+    content: url(./svgs/large-button-txtr.svg);
 }
 
 #render {
-    content: url(./large-button-render.svg);
-    width: var(--lg-btn-size);
-    height: var(--lg-btn-size);
+    content: url(./svgs/large-button-render.svg);
 }
 
 .noisy {
@@ -88,32 +125,15 @@ footer {
         --header-logo-font-size: xx-large;
         --main-nav-border-radius: 25px;
         --main-nav-margin: 35px;
-        --lg-btn-size: 100px;
-    }
-
-    main nav  {
-        background-color: var(--gba-color);
-        border-radius: var(--main-nav-border-radius);
-    }
-
-    .shape-btn {
-        background-color: transparent;
-        border-radius: 0px;
+        --footer-btn-size: 100px;
+        --header-btn-size: 70px;
+        --shape-btn-size: 75px;
     }
 
     header .logo {
         font-size: var(--header-logo-font-size);
     }
 
-    #texture {
-        width: var(--lg-btn-size);
-        height: var(--lg-btn-size);
-    }
-    
-    #render {
-        width: var(--lg-btn-size);
-        height: var(--lg-btn-size);
-    }
 }
 
 /* ANIMATION  :D -- Credit: https://lenadesign.org/2021/05/18/css-bouncing-text-animation/ 
