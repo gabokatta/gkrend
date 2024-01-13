@@ -1,7 +1,7 @@
 
 
 <p align="center">
-  <img align="center" src="https://raw.githubusercontent.com/gabokatta/gkrend/main/media/GKREND-13-1-2024.gif">
+  <a href="gabokatta.github.io/gkrend/"><img align="center" src="https://raw.githubusercontent.com/gabokatta/gkrend/main/media/GKREND-13-1-2024.gif"></a>
 </p>
 
 ---
