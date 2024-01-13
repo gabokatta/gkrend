@@ -1,6 +1,20 @@
-# **gkrend**
+
+
+<p align="center">
+  <img align="center" src="https://raw.githubusercontent.com/gabokatta/gkrend/main/media/GKREND-13-1-2024.gif">
+</p>
+
+---
 
 > **GKREND** is a static website that serves as a demo for an extremely simple WebGL 3D Engine; also, it _ATTEMPTS_ to look like a Game Boy Advance.
+
+<p align="center">
+  <img align="center" src="https://raw.githubusercontent.com/gabokatta/gkrend/main/media/demo_finished_desktop.gif">
+</p>
+
+> The site is responsive so you can use it in [your phone](https://github.com/gabokatta/gkrend/blob/main/media/demo_finished_mobile.gif) as well.
+
+
 
 ## **Features**
 
