@@ -18,7 +18,7 @@ While very basic, the site allows the user to tinker with the rendered geometry 
   - Apply Animations (Only 2 available because I'm Lazy)
 - Orbital Camera that allows the user to "move" the object around. (Touch Screens Supported as well!)
 - Scrollwheel used to zoom in/out.
-  
+
 > All of those in real-time! (craaazy right?)
 
 ### **Miscellaneous**
@@ -69,6 +69,17 @@ Fast-forward to 2024, armed with plenty of free time and a desire to start build
 <p>
 
 > Learning the fundamentals of graphics programming was challenging but fulfilling. I'm not sure if I'll ever do something with it again, but now that I know the basics, I'm looking forward to using more streamlined tools such as **ThreeJS** if I ever want to render 3D objects into a website.
+
+</p>
+</details>
+
+<details>
+<summary>
+<b>Pixel Art?!</b>
+</summary>
+<p>
+
+> Making the buttons match the aesthetic kinda forced me to dabble into some pixelart, so using Aseprite I tried to make some decent buttons!
 
 </p>
 </details>
