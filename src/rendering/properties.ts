@@ -3,6 +3,8 @@ import { ANIMATION, ApplicableAnimation, DEFAULT_VELOCITY, Resize, Rotate } from
 import grass from "../engine/textures/grass.png";
 import lava from "../engine/textures/lava.png";
 import water from "../engine/textures/water.png";
+import moon from "../engine/textures/moon.png";
+import earth from "../engine/textures/earth.jpg";
 import { Geometry } from "../engine/geometry";
 import { Cylinder } from "../engine/shapes/cylinder";
 import { Plane } from "../engine/shapes/plane";
@@ -14,6 +16,8 @@ export enum Textures {
   LAVA,
   WATER,
   GRASS,
+  MOON,
+  EARTH,
 }
 
 export enum Render {
@@ -26,6 +30,8 @@ export const TEXTURES = new Map<Textures, string>([
   [Textures.LAVA, lava],
   [Textures.GRASS, grass],
   [Textures.WATER, water],
+  [Textures.MOON, moon],
+  [Textures.EARTH, earth],
 ]);
 
 export enum Shapes {
@@ -39,7 +45,9 @@ export const NEXT_TEXTURE = new Map<Textures, Textures>([
   [Textures.NONE, Textures.LAVA],
   [Textures.LAVA, Textures.GRASS],
   [Textures.GRASS, Textures.WATER],
-  [Textures.WATER, Textures.NONE],
+  [Textures.WATER, Textures.MOON],
+  [Textures.MOON, Textures.EARTH],
+  [Textures.EARTH, Textures.NONE],
 ]);
 
 export const NEXT_RENDER = new Map<Render, Render>([
