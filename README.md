@@ -12,7 +12,8 @@
   <img align="center" src="https://raw.githubusercontent.com/gabokatta/gkrend/main/media/demo_finished_desktop.gif">
 </p>
 
-> The site is responsive so you can use it in [your phone](https://github.com/gabokatta/gkrend/blob/main/media/demo_finished_mobile.gif) as well.
+> [Try it out!](https://gabokatta.github.io/gkrend/)
+> , the site is responsive so you can use it in [your phone](https://github.com/gabokatta/gkrend/blob/main/media/demo_finished_mobile.gif) as well.
 
 
 
